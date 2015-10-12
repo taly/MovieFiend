@@ -1,29 +1,63 @@
 package com.example.trabinerson.moviefiend;
 
+import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Created by trabinerson on 10/12/15.
+ * Adapts an array of Movie instances to its corresponding ListView.
  */
-public class InTheatresAdapter extends CursorAdapter {
+public class InTheatresAdapter extends ArrayAdapter<Movie> {
 
-    public InTheatresAdapter(Context context, Cursor c, int flags) { super(context, c, flags); }
+    Context mContext;
+    int mLayoutResourceId;
+    Movie mData[] = null;
 
-    @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_item_in_theatres, parent, false);
-        return view;
+    public InTheatresAdapter(Context context, int layoutResourceId, Movie[] data) {
+        super(context, layoutResourceId, data);
+        this.mLayoutResourceId = layoutResourceId;
+        this.mContext = context;
+        this.mData = data;
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        TextView movieNameView = (TextView) view.findViewById(R.id.textview_movie_name);
-        movieNameView.setText("Movie name");
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View row = convertView;
+        MovieHolder holder = null;
+
+        if (row == null) {
+            LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
+            row = inflater.inflate(mLayoutResourceId, parent, false);
+            holder = new MovieHolder(row);
+            row.setTag(holder);
+        }
+        else {
+            holder = (MovieHolder)row.getTag();
+        }
+
+        Movie movie = mData[position];
+        // TODO movie poster
+        holder.mNameView.setText(movie.mName);
+        holder.mRatingView.setText(Double.toString(movie.mRating));
+
+        return row;
+    }
+
+    public static class MovieHolder {
+
+        public final ImageView mPosterView;
+        public final TextView mNameView;
+        public final TextView mRatingView;
+
+        public MovieHolder(View rootView) {
+            mPosterView = (ImageView) rootView.findViewById(R.id.imageview_poster);
+            mNameView = (TextView) rootView.findViewById(R.id.textview_movie_name);
+            mRatingView = (TextView) rootView.findViewById(R.id.textview_movie_rating);
+        }
     }
 }
