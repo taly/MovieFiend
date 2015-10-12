@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mMoviesList = (ListView) findViewById(R.id.listview_in_theatres);
-        fetchMovies();
+        fetchAndUpdateMovies();
     }
 
     @Override
@@ -67,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    private void fetchMovies() {
+    private void fetchAndUpdateMovies() {
 
         // Build URL
         Uri nowPlayingUrl = Uri.parse(MOVIE_API_BASE_URL).buildUpon()
@@ -78,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
         String url = nowPlayingUrl.toString();
 
         // Build request
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.GET, url, null,
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
 
                 new Response.Listener<JSONObject>() {
 
@@ -118,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Send request
         // TODO move queue to singleton
-        RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
     }
 
