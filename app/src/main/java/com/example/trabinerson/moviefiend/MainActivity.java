@@ -1,9 +1,10 @@
 package com.example.trabinerson.moviefiend;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,6 +12,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Movie[] data = getMoviesInTheatre();
+        InTheatresAdapter adapter = new InTheatresAdapter(this, R.layout.list_item_in_theatres, data);
+        ListView list = (ListView) findViewById(R.id.listview_in_theatres);
+        list.setAdapter(adapter);
     }
 
     @Override
@@ -33,5 +38,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private static Movie[] getMoviesInTheatre() {
+        Movie[] data = {
+                new Movie("The Martian", 8.2, "DUMMY"),
+                new Movie("The Maze Runner", 6.9, "WHATEVER"),
+                new Movie("Another Movie", 9.9, "ANOTHER")
+        };
+        return data;
     }
 }

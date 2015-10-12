@@ -1,9 +1,10 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/in_theatres_fragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:ignore="MergeRootFrame"
-    tools:layout="@android:layout/list_content"
-    android:name="com.example.trabinerson.moviefiend.InTheatresFragment"
-    tools:context="com.example.trabinerson.moviefiend.InTheatresFragment" />
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/listview_in_theatres"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
+</FrameLayout>
