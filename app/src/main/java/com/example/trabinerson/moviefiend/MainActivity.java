@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String ACTIVITY_TAG = "MovieFiend";
 
     public static final String API_KEY = "3508e43ae4ba2bd4c216990c671291b5";
     public static final String API_KEY_QUERY_PARAM = "api_key";
@@ -42,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mMoviesList = (ListView) findViewById(R.id.listview_in_theatres);
         fetchAndUpdateMovies();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        RequestQueueSingleton.getInstance(this).cancelAllRequests(ACTIVITY_TAG);
     }
 
     @Override
@@ -118,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         // Send request
+        request.setTag(ACTIVITY_TAG);
         RequestQueueSingleton.getInstance(this).addToRequestQueue(request);
     }
 

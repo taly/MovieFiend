@@ -46,6 +46,12 @@ public class RequestQueueSingleton {
         return mInstance;
     }
 
+    public void cancelAllRequests(Object tag) {
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(tag);
+        }
+    }
+
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
