@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 
 /**
  * Adapts an array of Movie instances to its corresponding ListView.
@@ -40,22 +42,23 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
             holder = (MovieHolder)row.getTag();
         }
 
+        ImageLoader imageLoader = RequestQueueSingleton.getInstance(this.mContext).getImageLoader();
         Movie movie = mData[position];
-        // TODO movie poster
         holder.mNameView.setText(movie.mName);
         holder.mRatingView.setText(Double.toString(movie.mRating));
+        holder.mPosterView.setImageUrl(movie.mPosterUrl, imageLoader);
 
         return row;
     }
 
     public static class MovieHolder {
 
-        public final ImageView mPosterView;
+        public final NetworkImageView mPosterView;
         public final TextView mNameView;
         public final TextView mRatingView;
 
         public MovieHolder(View rootView) {
-            mPosterView = (ImageView) rootView.findViewById(R.id.imageview_poster);
+            mPosterView = (NetworkImageView) rootView.findViewById(R.id.imageview_poster);
             mNameView = (TextView) rootView.findViewById(R.id.textview_movie_name);
             mRatingView = (TextView) rootView.findViewById(R.id.textview_movie_rating);
         }
