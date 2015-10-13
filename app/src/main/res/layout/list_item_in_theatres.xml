@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.android.volley.toolbox.NetworkImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
         android:id="@+id/imageview_poster"
-        android:src="@mipmap/ic_launcher"/>
+        tools:src="@mipmap/ic_launcher"
+        android:layout_marginLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="20dp">
 
         <TextView
             android:layout_width="wrap_content"
