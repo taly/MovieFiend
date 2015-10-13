@@ -32,6 +32,7 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
         View row = convertView;
         MovieHolder holder = null;
 
+        // Initialize row if necessary
         if (row == null) {
             LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
             row = inflater.inflate(mLayoutResourceId, parent, false);
@@ -42,8 +43,9 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
             holder = (MovieHolder)row.getTag();
         }
 
-        ImageLoader imageLoader = RequestQueueSingleton.getInstance(this.mContext).getImageLoader();
+        // Update row views
         Movie movie = mData[position];
+        ImageLoader imageLoader = RequestQueueSingleton.getInstance(this.mContext).getImageLoader();
         holder.mNameView.setText(movie.mName);
         String rating = this.mContext.getString(R.string.rating, movie.mRating);
         holder.mRatingView.setText(rating);
