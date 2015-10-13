@@ -6,8 +6,10 @@
     android:layout_height="match_parent">
 
     <com.android.volley.toolbox.NetworkImageView
-        android:layout_width="100dp"
-        android:layout_height="150dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:layout_weight="3"
         android:id="@+id/imageview_poster"
         tools:src="@mipmap/ic_launcher"
         android:layout_marginLeft="5dp"
@@ -16,10 +18,12 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="5"
         android:gravity="center_vertical"
-        android:layout_marginLeft="20dp">
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,10 +40,14 @@
             android:id="@+id/textview_movie_rating" />
     </LinearLayout>
 
-    <!--<ImageView-->
-        <!--tools:src="@mipmap/ic_launcher"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/imageview_drill_into_movie" />-->
+    <ImageView
+        android:src="@drawable/expand_chevron"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:scaleType="fitCenter"
+        android:layout_weight="1"
+        android:id="@+id/imageview_drill_into_movie"
+        android:gravity="center_vertical"
+        android:layout_gravity="center" />
 
 </LinearLayout>
