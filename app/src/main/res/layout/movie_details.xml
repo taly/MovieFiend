@@ -1,57 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView
     android:layout_height="match_parent"
-    android:id="@+id/details_root">
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/details_root"
+        android:layout_margin="10dp">
 
-        <com.android.volley.toolbox.NetworkImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/imageview_details_poster"
-            android:scaleType="fitCenter"
-            android:padding="10dp" />
+        <LinearLayout android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-
-            android:paddingRight="10dp"
-            android:layout_gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                tools:text="The Martian"
-                android:id="@+id/textview_movie_name"
-                android:paddingTop="10dp"/>
+                android:layout_weight="1"
+                android:paddingRight="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="24dp"
+                    tools:text="The Martian"
+                    android:id="@+id/textview_movie_name"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    tools:text="Rating: 7.7"
+                    android:id="@+id/textview_movie_rating"/>
+            </LinearLayout>
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                tools:text="Rating: 7.7"
-                android:id="@+id/textview_movie_rating"
-                android:paddingTop="10dp"/>
+                android:layout_weight="1"
+                android:id="@+id/imageview_details_poster"
+                android:scaleType="fitCenter"
+                android:layout_marginRight="5dp"/>
+
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="During a manned mission to Mars, Astronaut Mark Watney is presumed dead after a fierce storm and left behind by his crew. But Watney has survived and finds himself stranded and alone on the hostile planet. With only meager supplies, he must draw upon his ingenuity, wit and spirit to subsist and find a way to signal to Earth that he is alive."
+            android:id="@+id/textview_movie_description"
+            android:padding="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        tools:text="During a manned mission to Mars, Astronaut Mark Watney is presumed dead after a fierce storm and left behind by his crew. But Watney has survived and finds himself stranded and alone on the hostile planet. With only meager supplies, he must draw upon his ingenuity, wit and spirit to subsist and find a way to signal to Earth that he is alive."
-        android:id="@+id/textview_movie_description"
-        android:padding="10dp"/>
+</ScrollView>
 
-</LinearLayout>
 
