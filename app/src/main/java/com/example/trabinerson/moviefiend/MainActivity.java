@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        Log.i(LOG_TAG, "Cancelling all requests");
         RequestQueueSingleton.getInstance(this).cancelAllRequests(ACTIVITY_TAG);
     }
 
@@ -85,35 +86,11 @@ public class MainActivity extends AppCompatActivity {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, nowPlayingUrl, null,
 
                 new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
-
                         Log.i(LOG_TAG, "Got movie data from server");
-                        try {
-                            JSONArray results = response.getJSONArray(JSON_KEY_RESULTS);
-                            Log.i(LOG_TAG, "Found " + results.length() + " movies");
-                            ArrayList<Movie> data = new ArrayList<>();
-
-                            for (int i = 0; i < results.length(); i++) {
-                                JSONObject currentRaw = results.getJSONObject(i);
-                                String name = currentRaw.getString(JSON_KEY_MOVIE_NAME);
-                                Double rating = currentRaw.getDouble(JSON_KEY_MOVIE_RATING);
-                                String posterPath = currentRaw.getString(JSON_KEY_POSTER_PATH);
-                                String posterUrl = Uri.parse(IMAGES_API_BASE_URL).buildUpon()
-                                        .appendEncodedPath(posterPath)
-                                        .build().toString();
-                                Log.i(LOG_TAG, "Poster URL for the movie '" + name + ": " + posterUrl);
-                                Movie currentMovie = new Movie(name, rating, posterUrl);
-                                data.add(currentMovie);
-                            }
-
-                            Movie[] dataArray = data.toArray(new Movie[data.size()]);
-                            populateMoviesListView(dataArray);
-                        }
-                        catch (JSONException e) {
-                            Log.e(LOG_TAG, "Exception while processing movies from server", e);
-                        }
+                        Movie[] data = getMoviesFromResponse(response);
+                        populateMoviesListView(data);
                     }
                 },
 
@@ -127,6 +104,32 @@ public class MainActivity extends AppCompatActivity {
         // Send request
         request.setTag(ACTIVITY_TAG);
         RequestQueueSingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    private Movie[] getMoviesFromResponse(JSONObject response) {
+        try {
+            JSONArray responseArray = response.getJSONArray(JSON_KEY_RESULTS);
+            Log.i(LOG_TAG, "Found " + responseArray.length() + " movies");
+            ArrayList<Movie> data = new ArrayList<>();
+            for (int i = 0; i < responseArray.length(); i++) {
+                JSONObject currentRaw = responseArray.getJSONObject(i);
+                String name = currentRaw.getString(JSON_KEY_MOVIE_NAME);
+                Double rating = currentRaw.getDouble(JSON_KEY_MOVIE_RATING);
+                String posterPath = currentRaw.getString(JSON_KEY_POSTER_PATH);
+                String posterUrl = Uri.parse(IMAGES_API_BASE_URL).buildUpon()
+                        .appendEncodedPath(posterPath)
+                        .build().toString();
+                Log.i(LOG_TAG, "Poster URL for the movie '" + name + ": " + posterUrl);
+                Movie currentMovie = new Movie(name, rating, posterUrl);
+                data.add(currentMovie);
+            }
+            Movie[] dataArray = data.toArray(new Movie[data.size()]);
+            return dataArray;
+        }
+        catch (JSONException e) {
+            Log.e(LOG_TAG, "Exception while processing movies from server", e);
+                return null;
+        }
     }
 
     private void populateMoviesListView(Movie[] data) {
