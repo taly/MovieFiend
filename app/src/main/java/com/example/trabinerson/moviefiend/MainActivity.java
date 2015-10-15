@@ -1,11 +1,12 @@
 package com.example.trabinerson.moviefiend;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -33,15 +34,35 @@ public class MainActivity extends AppCompatActivity {
     public static final String JSON_KEY_RESULTS = "results";
     public static final String JSON_KEY_MOVIE_NAME = "original_title";
     public static final String JSON_KEY_MOVIE_RATING = "vote_average";
+    public static final String JSON_KEY_MOVIE_DESCRIPTION = "overview";
     public static final String JSON_KEY_POSTER_PATH = "poster_path";
 
+    public static final String INTENT_KEY_MOVIE = "Movie";
+
     private ListView mMoviesList;
+    private InTheatresAdapter mListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mMoviesList = (ListView) findViewById(R.id.listview_in_theatres);
+        mMoviesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Movie movie = mListAdapter.getMovieAtPosition(position);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(INTENT_KEY_MOVIE, movie);
+                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+                intent.putExtras(bundle);
+
+                startActivity(intent);
+            }
+        });
+
+
         fetchAndUpdateMovies();
     }
 
@@ -50,28 +71,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         Log.i(LOG_TAG, "Cancelling all requests");
         RequestQueueSingleton.getInstance(this).cancelAllRequests(ACTIVITY_TAG);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void fetchAndUpdateMovies() {
@@ -115,12 +114,13 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject currentRaw = responseArray.getJSONObject(i);
                 String name = currentRaw.getString(JSON_KEY_MOVIE_NAME);
                 Double rating = currentRaw.getDouble(JSON_KEY_MOVIE_RATING);
+                String description = currentRaw.getString(JSON_KEY_MOVIE_DESCRIPTION);
                 String posterPath = currentRaw.getString(JSON_KEY_POSTER_PATH);
                 String posterUrl = Uri.parse(IMAGES_API_BASE_URL).buildUpon()
                         .appendEncodedPath(posterPath)
                         .build().toString();
                 Log.i(LOG_TAG, "Poster URL for the movie '" + name + ": " + posterUrl);
-                Movie currentMovie = new Movie(name, rating, posterUrl);
+                Movie currentMovie = new Movie(name, rating, posterUrl, description);
                 data.add(currentMovie);
             }
             Movie[] dataArray = data.toArray(new Movie[data.size()]);
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateMoviesListView(Movie[] data) {
-        InTheatresAdapter adapter = new InTheatresAdapter(this, R.layout.list_item_in_theatres, data);
-        mMoviesList.setAdapter(adapter);
+        mListAdapter = new InTheatresAdapter(this, R.layout.list_item_in_theatres, data);
+        mMoviesList.setAdapter(mListAdapter);
     }
 }

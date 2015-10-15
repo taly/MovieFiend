@@ -54,6 +54,10 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
         return row;
     }
 
+    public Movie getMovieAtPosition(int position) {
+        return mData[position];
+    }
+
     public static class MovieHolder {
 
         public final NetworkImageView mPosterView;
