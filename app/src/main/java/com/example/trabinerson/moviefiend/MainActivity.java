@@ -82,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
                 .build().toString();
 
         // Build request
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, nowPlayingUrl, null,
+        String requestBody = null;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, nowPlayingUrl, requestBody,
 
                 new Response.Listener<JSONObject>() {
                     @Override
