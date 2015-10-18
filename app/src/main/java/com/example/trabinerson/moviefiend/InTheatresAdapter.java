@@ -20,9 +20,9 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
     int mLayoutResourceId;
     Movie mData[] = null;
 
-    public InTheatresAdapter(Context context, int layoutResourceId, Movie[] data) {
-        super(context, layoutResourceId, data);
-        this.mLayoutResourceId = layoutResourceId;
+    public InTheatresAdapter(Context context,  Movie[] data) {
+        super(context, R.layout.list_item_in_theatres, data);
+        this.mLayoutResourceId = R.layout.list_item_in_theatres;
         this.mContext = context;
         this.mData = data;
     }

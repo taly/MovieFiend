@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateMoviesListView(Movie[] data) {
-        InTheatresAdapter adapter = new InTheatresAdapter(this, R.layout.list_item_in_theatres, data);
+        InTheatresAdapter adapter = new InTheatresAdapter(this, data);
         mMoviesList.setAdapter(adapter);
     }
 }
