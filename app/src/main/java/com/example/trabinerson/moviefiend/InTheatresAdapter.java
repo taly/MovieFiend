@@ -45,7 +45,7 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
 
         // Update row views
         Movie movie = mData[position];
-        ImageLoader imageLoader = RequestQueueSingleton.getInstance(this.mContext).getImageLoader();
+        ImageLoader imageLoader = RequestQueueSingleton.getInstance().getImageLoader();
         holder.mNameView.setText(movie.mName);
         String rating = this.mContext.getString(R.string.rating, movie.mRating);
         holder.mRatingView.setText(rating);

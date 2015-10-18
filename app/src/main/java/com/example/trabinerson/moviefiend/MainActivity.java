@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Log.i(LOG_TAG, "Cancelling all requests");
-        RequestQueueSingleton.getInstance(this).cancelAllRequests(ACTIVITY_TAG);
+        RequestQueueSingleton.getInstance().cancelAllRequests(ACTIVITY_TAG);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Send request
         request.setTag(ACTIVITY_TAG);
-        RequestQueueSingleton.getInstance(this).addToRequestQueue(request);
+        RequestQueueSingleton.getInstance().addToRequestQueue(request);
     }
 
     private Movie[] getMoviesFromResponse(JSONObject response) {

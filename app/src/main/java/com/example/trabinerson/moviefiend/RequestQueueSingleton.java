@@ -2,6 +2,7 @@ package com.example.trabinerson.moviefiend;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.util.LruCache;
 
 import com.android.volley.Request;
@@ -18,10 +19,20 @@ public class RequestQueueSingleton {
     private ImageLoader mImageLoader;
     private static Context mCtx;
 
-    private RequestQueueSingleton(Context context) {
-        mCtx = context;
+    private static String LOG_TAG = RequestQueueSingleton.class.getSimpleName();
+
+    private RequestQueueSingleton() {
+
+        // Make sure we've been initialized
+        if (mCtx == null) {
+            throw new ExceptionInInitializerError(
+                    "RequestQueueSingleton constructor called without having initialized it first");
+        }
+
+        // Initialize request queue
         mRequestQueue = getRequestQueue();
 
+        // Initialize image loader
         mImageLoader = new ImageLoader(mRequestQueue,
                 new ImageLoader.ImageCache() {
                     private final LruCache<String, Bitmap>
@@ -39,9 +50,18 @@ public class RequestQueueSingleton {
                 });
     }
 
-    public static synchronized RequestQueueSingleton getInstance(Context context) {
+    public static synchronized void init(Context context) {
+        if (context == null) {
+            Log.w(LOG_TAG, "Trying to initialize RequestQueueSingleton with null context");
+            return;
+        }
+        Log.i(LOG_TAG, "Initializing RequestQueueSingleton");
+        mCtx = context;
+    }
+
+    public static synchronized RequestQueueSingleton getInstance() {
         if (mInstance == null) {
-            mInstance = new RequestQueueSingleton(context);
+            mInstance = new RequestQueueSingleton();
         }
         return mInstance;
     }
@@ -50,6 +70,7 @@ public class RequestQueueSingleton {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
+
     }
 
     public RequestQueue getRequestQueue() {
