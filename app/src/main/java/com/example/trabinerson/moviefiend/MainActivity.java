@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader loader, Movie[] data) {
-        InTheatresAdapter adapter = new InTheatresAdapter(this, data);
-        mMoviesList.setAdapter(adapter);
+        mListAdapter = new InTheatresAdapter(this, data);
+        mMoviesList.setAdapter(mListAdapter);
     }
 
     @Override

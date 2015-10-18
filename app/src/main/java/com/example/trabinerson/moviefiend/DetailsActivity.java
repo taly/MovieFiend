@@ -35,7 +35,7 @@ public class DetailsActivity extends AppCompatActivity {
         TextView descriptionView = (TextView) rootView.findViewById(R.id.textview_movie_description);
 
         // Set data
-        ImageLoader imageLoader = RequestQueueSingleton.getInstance(this).getImageLoader();
+        ImageLoader imageLoader = RequestQueueSingleton.getInstance().getImageLoader();
         nameView.setText(movie.mName);
         String rating = getString(R.string.rating, movie.mRating);
         ratingView.setText(rating);
