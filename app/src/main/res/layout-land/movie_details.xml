@@ -32,6 +32,16 @@
                 android:id="@+id/textview_movie_rating"/>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/link_blue"
+                android:textSize="16sp"
+                android:text="@string/similar_movies"
+                android:id="@+id/textview_similar_movies"
+                android:layout_marginTop="10dp"
+                android:clickable="true"/>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="During a manned mission to Mars, Astronaut Mark Watney is presumed dead after a fierce storm and left behind by his crew. But Watney has survived and finds himself stranded and alone on the hostile planet. With only meager supplies, he must draw upon his ingenuity, wit and spirit to subsist and find a way to signal to Earth that he is alive."

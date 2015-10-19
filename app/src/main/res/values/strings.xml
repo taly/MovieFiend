@@ -4,4 +4,5 @@
 
     <string name="action_settings">Settings</string>
     <string name="rating">Rating: <xliff:g id="rating">%.1f</xliff:g></string>
+    <string name="similar_movies">Similar Movies</string>
 </resources>

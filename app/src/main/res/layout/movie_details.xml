@@ -18,7 +18,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:paddingRight="10dp">
 
@@ -36,10 +36,21 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     tools:text="Rating: 7.7"
                     android:id="@+id/textview_movie_rating"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/link_blue"
+                    android:textSize="16sp"
+                    android:text="@string/similar_movies"
+                    android:id="@+id/textview_similar_movies"
+                    android:layout_marginTop="10dp"
+                    android:clickable="true"/>
             </LinearLayout>
 
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="0dp"
+                android:minHeight="200dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/imageview_details_poster"
