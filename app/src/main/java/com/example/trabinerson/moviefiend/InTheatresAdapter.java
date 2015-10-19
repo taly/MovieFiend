@@ -16,9 +16,9 @@ import com.android.volley.toolbox.NetworkImageView;
  */
 public class InTheatresAdapter extends ArrayAdapter<Movie> {
 
-    Context mContext;
-    int mLayoutResourceId;
-    Movie mData[] = null;
+    private Context mContext;
+    private int mLayoutResourceId;
+    private Movie mData[] = null;
 
     public InTheatresAdapter(Context context,  Movie[] data) {
         super(context, R.layout.list_item_in_theatres, data);
