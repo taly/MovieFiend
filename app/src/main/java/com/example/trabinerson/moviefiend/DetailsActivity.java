@@ -32,8 +32,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_details);
 
-        // Get holder
-
         // Get movie
         Intent intent = getIntent();
         Movie movie = intent.getExtras().getParcelable(INTENT_KEY_MOVIE);
