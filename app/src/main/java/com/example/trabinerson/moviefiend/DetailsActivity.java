@@ -15,6 +15,8 @@ import com.android.volley.toolbox.NetworkImageView;
  */
 public class DetailsActivity extends AppCompatActivity {
 
+    public static final String INTENT_KEY_MOVIE = "Movie";
+
     private static final String LOG_TAG = DetailsActivity.class.getSimpleName();
 
     @Override
@@ -24,7 +26,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         // Get movie
         Intent intent = getIntent();
-        Movie movie = (Movie)intent.getExtras().getSerializable(MainActivity.INTENT_KEY_MOVIE);
+        Movie movie = (Movie)intent.getExtras().getSerializable(INTENT_KEY_MOVIE);
         Log.i(LOG_TAG, "Unbundled " + movie.getName());
 
         // Get views

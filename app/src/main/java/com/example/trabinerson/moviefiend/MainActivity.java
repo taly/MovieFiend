@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Movie[]> {
 
-    public static final String INTENT_KEY_MOVIE = "Movie";
+
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int LOADER_ID = 1;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 Movie movie = mListAdapter.getMovieAtPosition(position);
 
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(INTENT_KEY_MOVIE, movie);
+                bundle.putSerializable(DetailsActivity.INTENT_KEY_MOVIE, movie);
                 Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
                 intent.putExtras(bundle);
 
