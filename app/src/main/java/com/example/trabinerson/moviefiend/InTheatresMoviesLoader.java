@@ -8,7 +8,6 @@ import android.net.Uri;
  */
 public class InTheatresMoviesLoader extends MoviesLoader {
 
-    private static final String MOVIE_API_BASE_URL = "http://api.themoviedb.org/3/movie/";
     private static final String NOW_PLAYING_ENDPOINT = "now_playing";
 
     public InTheatresMoviesLoader(Context context) {

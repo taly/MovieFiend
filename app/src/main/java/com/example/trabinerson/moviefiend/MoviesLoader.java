@@ -17,12 +17,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Manages loading of movies asynchronously.
+ * Manages loading of movies asynchronously (through Volley).
  */
 public abstract class MoviesLoader extends Loader<Movie[]> {
 
     private static final String API_KEY = "3508e43ae4ba2bd4c216990c671291b5";
     private static final String API_KEY_QUERY_PARAM = "api_key";
+    protected static final String MOVIE_API_BASE_URL = "http://api.themoviedb.org/3/movie/";
     private static final String IMAGES_API_BASE_URL = "http://image.tmdb.org/t/p/w500/";
 
     private static final String JSON_KEY_RESULTS = "results";
