@@ -11,8 +11,6 @@ import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Movie[]> {
 
-
-
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int LOADER_ID = 1;
 
