@@ -26,7 +26,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         // Get movie
         Intent intent = getIntent();
-        Movie movie = (Movie)intent.getExtras().getSerializable(INTENT_KEY_MOVIE);
+        Movie movie = intent.getExtras().getParcelable(INTENT_KEY_MOVIE);
         Log.i(LOG_TAG, "Unbundled " + movie.getName());
 
         // Get views

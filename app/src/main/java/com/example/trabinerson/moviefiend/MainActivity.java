@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 Movie movie = mListAdapter.getMovieAtPosition(position);
 
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(DetailsActivity.INTENT_KEY_MOVIE, movie);
+                bundle.putParcelable(DetailsActivity.INTENT_KEY_MOVIE, movie);
                 Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
                 intent.putExtras(bundle);
 

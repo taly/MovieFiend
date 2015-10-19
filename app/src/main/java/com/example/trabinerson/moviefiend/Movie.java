@@ -1,11 +1,12 @@
 package com.example.trabinerson.moviefiend;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Represents a movie in theatres.
  */
-public class Movie implements Serializable {
+public class Movie implements Parcelable {
 
     private String mName;
     private double mRating;
@@ -18,6 +19,25 @@ public class Movie implements Serializable {
         this.mPosterUrl = posterUrl;
         this.mDescription = description;
     }
+
+    private Movie(Parcel parcel) {
+        mName = parcel.readString();
+        mRating = parcel.readDouble();
+        mPosterUrl = parcel.readString();
+        mDescription = parcel.readString();
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR
+            = new Parcelable.Creator<Movie>() {
+        public Movie createFromParcel(Parcel parcel) {
+            return new Movie(parcel);
+        }
+
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
     public String getName() {
         return this.mName;
     }
@@ -32,5 +52,18 @@ public class Movie implements Serializable {
 
     public String getDescription() {
         return this.mDescription;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.mName);
+        dest.writeDouble(this.mRating);
+        dest.writeString(this.mPosterUrl);
+        dest.writeString(this.mDescription);
     }
 }
