@@ -25,7 +25,7 @@ public class DetailsActivity extends AppCompatActivity {
         // Get movie
         Intent intent = getIntent();
         Movie movie = (Movie)intent.getExtras().getSerializable(MainActivity.INTENT_KEY_MOVIE);
-        Log.i(LOG_TAG, "Unbundled " + movie.mName);
+        Log.i(LOG_TAG, "Unbundled " + movie.getName());
 
         // Get views
         View rootView = findViewById(R.id.details_root);
@@ -36,10 +36,10 @@ public class DetailsActivity extends AppCompatActivity {
 
         // Set data
         ImageLoader imageLoader = RequestQueueSingleton.getInstance().getImageLoader();
-        nameView.setText(movie.mName);
-        String rating = getString(R.string.rating, movie.mRating);
+        nameView.setText(movie.getName());
+        String rating = getString(R.string.rating, movie.getRating());
         ratingView.setText(rating);
-        posterView.setImageUrl(movie.mPosterUrl, imageLoader);
-        descriptionView.setText(movie.mDescription);
+        posterView.setImageUrl(movie.getPosterUrl(), imageLoader);
+        descriptionView.setText(movie.getDescription());
     }
 }

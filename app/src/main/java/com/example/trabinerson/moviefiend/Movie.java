@@ -7,15 +7,30 @@ import java.io.Serializable;
  */
 public class Movie implements Serializable {
 
-    public String mName;
-    public double mRating;
-    public String mPosterUrl;
-    public String mDescription;
+    private String mName;
+    private double mRating;
+    private String mPosterUrl;
+    private String mDescription;
 
     public Movie(String name, double rating, String posterUrl, String description) {
         this.mName = name;
         this.mRating = rating;
         this.mPosterUrl = posterUrl;
         this.mDescription = description;
+    }
+    public String getName() {
+        return this.mName;
+    }
+
+    public double getRating() {
+        return this.mRating;
+    }
+
+    public String getPosterUrl() {
+        return this.mPosterUrl;
+    }
+
+    public String getDescription() {
+        return this.mDescription;
     }
 }

@@ -16,13 +16,11 @@ import com.android.volley.toolbox.NetworkImageView;
  */
 public class InTheatresAdapter extends ArrayAdapter<Movie> {
 
-    Context mContext;
-    int mLayoutResourceId;
-    Movie mData[] = null;
+    private Context mContext;
+    private Movie mData[] = null;
 
     public InTheatresAdapter(Context context,  Movie[] data) {
         super(context, R.layout.list_item_in_theatres, data);
-        this.mLayoutResourceId = R.layout.list_item_in_theatres;
         this.mContext = context;
         this.mData = data;
     }
@@ -35,7 +33,7 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
         // Initialize row if necessary
         if (row == null) {
             LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
-            row = inflater.inflate(mLayoutResourceId, parent, false);
+            row = inflater.inflate(R.layout.list_item_in_theatres, parent, false);
             holder = new MovieHolder(row);
             row.setTag(holder);
         }
@@ -45,11 +43,7 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
 
         // Update row views
         Movie movie = mData[position];
-        ImageLoader imageLoader = RequestQueueSingleton.getInstance().getImageLoader();
-        holder.mNameView.setText(movie.mName);
-        String rating = this.mContext.getString(R.string.rating, movie.mRating);
-        holder.mRatingView.setText(rating);
-        holder.mPosterView.setImageUrl(movie.mPosterUrl, imageLoader);
+        holder.setMovie(this.mContext, movie);
 
         return row;
     }
@@ -68,6 +62,14 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
             mPosterView = (NetworkImageView) rootView.findViewById(R.id.imageview_poster);
             mNameView = (TextView) rootView.findViewById(R.id.textview_movie_name);
             mRatingView = (TextView) rootView.findViewById(R.id.textview_movie_rating);
+        }
+
+        public void setMovie(Context context, Movie movie) {
+            ImageLoader imageLoader = RequestQueueSingleton.getInstance().getImageLoader();
+            mNameView.setText(movie.getName());
+            String rating = context.getString(R.string.rating, movie.getRating());
+            mRatingView.setText(rating);
+            mPosterView.setImageUrl(movie.getPosterUrl(), imageLoader);
         }
     }
 }
