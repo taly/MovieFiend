@@ -17,12 +17,10 @@ import com.android.volley.toolbox.NetworkImageView;
 public class InTheatresAdapter extends ArrayAdapter<Movie> {
 
     private Context mContext;
-    private int mLayoutResourceId;
     private Movie mData[] = null;
 
     public InTheatresAdapter(Context context,  Movie[] data) {
         super(context, R.layout.list_item_in_theatres, data);
-        this.mLayoutResourceId = R.layout.list_item_in_theatres;
         this.mContext = context;
         this.mData = data;
     }
@@ -35,7 +33,7 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
         // Initialize row if necessary
         if (row == null) {
             LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
-            row = inflater.inflate(mLayoutResourceId, parent, false);
+            row = inflater.inflate(R.layout.list_item_in_theatres, parent, false);
             holder = new MovieHolder(row);
             row.setTag(holder);
         }
