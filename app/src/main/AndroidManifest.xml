@@ -28,6 +28,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.trabinerson.moviefiend.MainActivity" />
         </activity>
+
+        <activity
+            android:name=".SimilarMoviesPagerActivity"
+            android:label="@string/deatils_app_name"
+            android:parentActivityName=".DetailsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.trabinerson.moviefiend.DetailsActivity" />
+        </activity>
     </application>
 
 </manifest>
