@@ -19,26 +19,26 @@ import java.util.ArrayList;
 /**
  * Manages loading of movies asynchronously.
  */
-public class MoviesLoader extends Loader<Movie[]> {
+public abstract class MoviesLoader extends Loader<Movie[]> {
 
-    public static final String API_KEY = "3508e43ae4ba2bd4c216990c671291b5";
-    public static final String API_KEY_QUERY_PARAM = "api_key";
-    public static final String MOVIE_API_BASE_URL = "http://api.themoviedb.org/3/movie/";
-    public static final String IMAGES_API_BASE_URL = "http://image.tmdb.org/t/p/w500/";
-    public static final String NOW_PLAYING_ENDPOINT = "now_playing";
+    private static final String API_KEY = "3508e43ae4ba2bd4c216990c671291b5";
+    private static final String API_KEY_QUERY_PARAM = "api_key";
+    private static final String IMAGES_API_BASE_URL = "http://image.tmdb.org/t/p/w500/";
 
-    public static final String JSON_KEY_RESULTS = "results";
-    public static final String JSON_KEY_MOVIE_NAME = "original_title";
-    public static final String JSON_KEY_MOVIE_RATING = "vote_average";
-    public static final String JSON_KEY_MOVIE_DESCRIPTION = "overview";
-    public static final String JSON_KEY_POSTER_PATH = "poster_path";
+    private static final String JSON_KEY_RESULTS = "results";
+    private static final String JSON_KEY_MOVIE_NAME = "original_title";
+    private static final String JSON_KEY_MOVIE_RATING = "vote_average";
+    private static final String JSON_KEY_MOVIE_DESCRIPTION = "overview";
+    private static final String JSON_KEY_POSTER_PATH = "poster_path";
 
     private static final String ACTIVITY_TAG = "MovieFiend";
-    private static String LOG_TAG = MoviesLoader.class.getSimpleName();
+    protected static String LOG_TAG = MoviesLoader.class.getSimpleName();
 
     public MoviesLoader(Context context) {
         super(context);
     }
+
+    protected abstract Uri.Builder getBaseUriBuilder();
 
     @Override
     protected void onStartLoading() {
@@ -52,14 +52,14 @@ public class MoviesLoader extends Loader<Movie[]> {
         Log.i(LOG_TAG, "Loading movies from API");
 
         // Build URL
-        String nowPlayingUrl = Uri.parse(MOVIE_API_BASE_URL).buildUpon()
-                .appendPath(NOW_PLAYING_ENDPOINT)
-                .appendQueryParameter(API_KEY_QUERY_PARAM, API_KEY)
+        Uri.Builder builder = getBaseUriBuilder();
+        String url = builder.appendQueryParameter(API_KEY_QUERY_PARAM, API_KEY)
                 .build().toString();
+        Log.i(LOG_TAG, "URL: " + url);
 
         // Build request
         String requestBody = null;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, nowPlayingUrl, requestBody,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, requestBody,
 
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -103,7 +103,7 @@ public class MoviesLoader extends Loader<Movie[]> {
                 String posterUrl = Uri.parse(IMAGES_API_BASE_URL).buildUpon()
                         .appendEncodedPath(posterPath)
                         .build().toString();
-                Log.i(LOG_TAG, "Poster URL for the movie '" + name + ": " + posterUrl);
+                Log.v(LOG_TAG, "Poster URL for the movie '" + name + ": " + posterUrl);
                 Movie currentMovie = new Movie(name, rating, posterUrl, description);
                 data.add(currentMovie);
             }

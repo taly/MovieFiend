@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
-        return new MoviesLoader(this);
+        return new InTheatresMoviesLoader(this);
     }
 
     @Override
