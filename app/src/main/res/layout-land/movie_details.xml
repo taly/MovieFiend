@@ -47,7 +47,8 @@
                     android:id="@+id/textview_similar_movies"
                     android:layout_marginTop="10dp"
                     android:clickable="true"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible"
+                    android:onClick="onSimilarMoviesClicked"/>
             </FrameLayout>
 
             <TextView

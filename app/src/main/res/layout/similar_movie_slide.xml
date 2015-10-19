@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.view.ViewPager
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/similar_movies"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:padding="10dp"
+        android:background="#cccccc"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@color/header_grey"
+        android:paddingBottom="5dp">
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/imageview_dot1"
+            android:layout_margin="5dp"
+            android:src="@drawable/dot"/>
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/imageview_dot2"
+            android:layout_margin="5dp"
+            android:src="@drawable/dot"/>
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/imageview_dot3"
+            android:layout_margin="5dp"
+            android:src="@drawable/dot"/>
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/imageview_dot4"
+            android:layout_margin="5dp"
+            android:src="@drawable/dot"/>
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/imageview_dot5"
+            android:layout_margin="5dp"
+            android:src="@drawable/dot"/>
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pager_similar_movies"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
+</LinearLayout>

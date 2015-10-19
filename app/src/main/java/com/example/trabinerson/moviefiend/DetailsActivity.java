@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import java.util.Arrays;
+
 /**
  * The activity that shows movie details.
  */
@@ -44,7 +46,9 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     public void onSimilarMoviesClicked(View view) {
         Bundle bundle = new Bundle();
-        bundle.putParcelableArray(SimilarMoviesPagerActivity.INTENT_KEY_SIMILAR_MOVIES, mSimilarMovies);
+        int numMovies = Math.min(mSimilarMovies.length, SimilarMoviesPagerActivity.NUM_MOVIES);
+        Movie[] movieSubset = Arrays.copyOfRange(mSimilarMovies, 0, numMovies);
+        bundle.putParcelableArray(SimilarMoviesPagerActivity.INTENT_KEY_SIMILAR_MOVIES, movieSubset);
         Intent intent = new Intent(this, SimilarMoviesPagerActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
