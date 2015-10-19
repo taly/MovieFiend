@@ -27,6 +27,7 @@ public abstract class MoviesLoader extends Loader<Movie[]> {
     private static final String IMAGES_API_BASE_URL = "http://image.tmdb.org/t/p/w500/";
 
     private static final String JSON_KEY_RESULTS = "results";
+    private static final String JSON_KEY_ID = "id";
     private static final String JSON_KEY_MOVIE_NAME = "original_title";
     private static final String JSON_KEY_MOVIE_RATING = "vote_average";
     private static final String JSON_KEY_MOVIE_DESCRIPTION = "overview";
@@ -97,6 +98,7 @@ public abstract class MoviesLoader extends Loader<Movie[]> {
             ArrayList<Movie> data = new ArrayList<>();
             for (int i = 0; i < responseArray.length(); i++) {
                 JSONObject currentRaw = responseArray.getJSONObject(i);
+                int id = currentRaw.getInt(JSON_KEY_ID);
                 String name = currentRaw.getString(JSON_KEY_MOVIE_NAME);
                 Double rating = currentRaw.getDouble(JSON_KEY_MOVIE_RATING);
                 String description = currentRaw.getString(JSON_KEY_MOVIE_DESCRIPTION);
@@ -105,7 +107,7 @@ public abstract class MoviesLoader extends Loader<Movie[]> {
                         .appendEncodedPath(posterPath)
                         .build().toString();
                 Log.v(LOG_TAG, "Poster URL for the movie '" + name + ": " + posterUrl);
-                Movie currentMovie = new Movie(name, rating, posterUrl, description);
+                Movie currentMovie = new Movie(id, name, rating, posterUrl, description);
                 data.add(currentMovie);
             }
             Movie[] dataArray = data.toArray(new Movie[data.size()]);
