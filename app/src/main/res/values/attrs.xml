@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="RatingBubbleView">
         <attr name="bubbleColor" format="color" />
+        <attr name="bubbleText" format="string" />
     </declare-styleable>
 </resources>
