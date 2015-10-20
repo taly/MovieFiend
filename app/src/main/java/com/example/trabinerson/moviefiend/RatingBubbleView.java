@@ -72,7 +72,7 @@ public class RatingBubbleView extends TextView {
 
         // Text
         float a = (mTextPaint.ascent() + mTextPaint.descent());
-        canvas.drawText(mBubbleText, x + a, y - a/2, mTextPaint);
+        canvas.drawText(mBubbleText, x + a, y - a / 2, mTextPaint);
     }
 
     public void setFinalRating(double rating) {
@@ -80,10 +80,14 @@ public class RatingBubbleView extends TextView {
         mBubbleText = Double.toString(rating);
     }
 
+    public void setRating(float rating) {
+        mBubbleText = String.format("%.1f", rating);
+        invalidate();
+    }
+
     public void setBubbleColor(int color) {
         mBubbleColor = color;
         mBubblePaint.setColor(mBubbleColor);
         invalidate();
-//        requestLayout();
     }
 }

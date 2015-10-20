@@ -38,8 +38,11 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         // Set movie on screen
         View rootView = findViewById(R.id.details_root);
         mMovieDetailsHolder = new MovieDetailsHolder(rootView);
-        mMovieDetailsHolder.setMovie(this, movie);
-        mMovieDetailsHolder.animateRatingBubble();
+        mMovieDetailsHolder.setMovie(movie);
+        mMovieDetailsHolder.animateRatingBubble(
+                getColor(R.color.rating_red),
+                getColor(R.color.rating_yellow),
+                getColor(R.color.rating_green));
 
         // Init loader
         getLoaderManager().initLoader(LOADER_ID, null, this);

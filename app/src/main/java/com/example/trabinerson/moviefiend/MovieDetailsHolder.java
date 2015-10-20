@@ -1,8 +1,7 @@
 package com.example.trabinerson.moviefiend;
 
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,6 +14,8 @@ import com.android.volley.toolbox.NetworkImageView;
  */
 public class MovieDetailsHolder {
 
+    private Movie mMovie;
+
     private final NetworkImageView mPosterView;
     private final TextView mNameView;
     private final TextView mDescriptionView;
@@ -23,38 +24,61 @@ public class MovieDetailsHolder {
     private final RatingBubbleView mRatingBubble;
 
     public MovieDetailsHolder(View rootView) {
-        this.mPosterView = (NetworkImageView) rootView.findViewById(R.id.imageview_details_poster);
-        this.mNameView = (TextView) rootView.findViewById(R.id.textview_movie_name);
-        this.mRatingBubble = (RatingBubbleView) rootView.findViewById(R.id.rating_bubble);
-        this.mDescriptionView = (TextView) rootView.findViewById(R.id.textview_movie_description);
-        this.mSimilarMoviesText = (TextView) rootView.findViewById(R.id.textview_similar_movies);
-        this.mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_similar_movies);
+        mPosterView = (NetworkImageView) rootView.findViewById(R.id.imageview_details_poster);
+        mNameView = (TextView) rootView.findViewById(R.id.textview_movie_name);
+        mRatingBubble = (RatingBubbleView) rootView.findViewById(R.id.rating_bubble);
+        mDescriptionView = (TextView) rootView.findViewById(R.id.textview_movie_description);
+        mSimilarMoviesText = (TextView) rootView.findViewById(R.id.textview_similar_movies);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_similar_movies);
     }
 
-    public void setMovie(Context context, Movie movie) {
+    public void setMovie(Movie movie) {
+        mMovie = movie;
         ImageLoader imageLoader = RequestQueueSingleton.getInstance().getImageLoader();
-        this.mNameView.setText(movie.getName());
-        this.mRatingBubble.setFinalRating(movie.getRating());
-        this.mPosterView.setImageUrl(movie.getPosterUrl(), imageLoader);
-        this.mDescriptionView.setText(movie.getDescription());
+        mNameView.setText(movie.getName());
+        mRatingBubble.setFinalRating(movie.getRating());
+        mPosterView.setImageUrl(movie.getPosterUrl(), imageLoader);
+        mDescriptionView.setText(movie.getDescription());
     }
 
     public void finishLoading() {
-        this.mProgressBar.setVisibility(View.GONE);
-        this.mSimilarMoviesText.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
+        mSimilarMoviesText.setVisibility(View.VISIBLE);
     }
 
     public void disableSimilarMovies() {
-        this.mSimilarMoviesText.setVisibility(View.GONE);
-        this.mProgressBar.setVisibility(View.GONE);
+        mSimilarMoviesText.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.GONE);
     }
 
-    public void animateRatingBubble() {
-        // TODO API v problem with ofArgb. But but but...
-        int color1 = Color.parseColor("#ff0000");
-        int color2 = Color.parseColor("#00ff00");
-        ObjectAnimator animator = ObjectAnimator.ofArgb(mRatingBubble, "bubbleColor", color1, color2);
-        animator.setDuration(1000);
-        animator.start();
+    public void animateRatingBubble(int bubbleColor1, int bubbleColor2, int bubbleColor3) {
+        if (mMovie == null) {
+            return;
+        }
+        double rating = mMovie.getRating();
+        int totalDuration = 2000;
+
+        // Background color animators
+        ObjectAnimator backgroundAnimator1 = ObjectAnimator.ofArgb(
+                mRatingBubble, "bubbleColor", bubbleColor1, bubbleColor2);
+        backgroundAnimator1.setDuration(totalDuration/2);
+
+        ObjectAnimator backgroundAnimator2 = ObjectAnimator.ofArgb(
+                mRatingBubble, "bubbleColor", bubbleColor2, bubbleColor3);
+        backgroundAnimator1.setDuration(totalDuration/2);
+
+        AnimatorSet backgroundAnimator = new AnimatorSet();
+        backgroundAnimator.playSequentially(backgroundAnimator1, backgroundAnimator2);
+
+        // Number animator
+        ObjectAnimator numberAnimator = ObjectAnimator.ofFloat(
+                mRatingBubble, "rating", 0.0f, (float)rating);
+        numberAnimator.setDuration(totalDuration);
+
+        // All together now
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(backgroundAnimator, numberAnimator);
+
+        animatorSet.start();
     }
 }
