@@ -39,8 +39,7 @@
                     android:id="@+id/textview_movie_rating" />
                 <com.example.trabinerson.moviefiend.RatingBubbleView
                     android:id="@+id/rating_bubble"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"/>
+                    style="@style/RatingBubble"/>
             </LinearLayout>
 
             <FrameLayout

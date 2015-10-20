@@ -15,7 +15,7 @@ import com.android.volley.toolbox.NetworkImageView;
  */
 public class MovieDetailsHolder {
 
-    private static final int RATING_ANIMATION_DURATION = 5000;
+    private static final int RATING_ANIMATION_DURATION = 2000;
 
     private final NetworkImageView mPosterView;
     private final TextView mNameView;
