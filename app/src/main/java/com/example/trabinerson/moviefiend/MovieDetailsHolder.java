@@ -17,7 +17,6 @@ public class MovieDetailsHolder {
 
     private final NetworkImageView mPosterView;
     private final TextView mNameView;
-    private final TextView mRatingView;
     private final TextView mDescriptionView;
     private final TextView mSimilarMoviesText;
     private final ProgressBar mProgressBar;
@@ -26,7 +25,6 @@ public class MovieDetailsHolder {
     public MovieDetailsHolder(View rootView) {
         this.mPosterView = (NetworkImageView) rootView.findViewById(R.id.imageview_details_poster);
         this.mNameView = (TextView) rootView.findViewById(R.id.textview_movie_name);
-        this.mRatingView = (TextView) rootView.findViewById(R.id.textview_movie_rating);
         this.mRatingBubble = (RatingBubbleView) rootView.findViewById(R.id.rating_bubble);
         this.mDescriptionView = (TextView) rootView.findViewById(R.id.textview_movie_description);
         this.mSimilarMoviesText = (TextView) rootView.findViewById(R.id.textview_similar_movies);
@@ -36,7 +34,6 @@ public class MovieDetailsHolder {
     public void setMovie(Context context, Movie movie) {
         ImageLoader imageLoader = RequestQueueSingleton.getInstance().getImageLoader();
         this.mNameView.setText(movie.getName());
-        this.mRatingView.setText(context.getString(R.string.rating_standalone));
         this.mRatingBubble.setFinalRating(movie.getRating());
         this.mPosterView.setImageUrl(movie.getPosterUrl(), imageLoader);
         this.mDescriptionView.setText(movie.getDescription());
