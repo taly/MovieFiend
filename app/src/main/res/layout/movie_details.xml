@@ -3,7 +3,8 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
@@ -30,12 +31,25 @@
                     tools:text="The Martian"
                     android:id="@+id/textview_movie_name"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    tools:text="Rating: 7.7"
-                    android:id="@+id/textview_movie_rating"/>
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        tools:text="Rating:"
+                        android:layout_marginRight="5dp"
+                        android:id="@+id/textview_movie_rating" />
+                    <com.example.trabinerson.moviefiend.RatingBubbleView
+                        android:id="@+id/rating_bubble"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        tools:text="9.2"
+                        custom:bubbleColor="@color/rating_red" />
+                </LinearLayout>
 
                 <FrameLayout
                     android:layout_width="match_parent"

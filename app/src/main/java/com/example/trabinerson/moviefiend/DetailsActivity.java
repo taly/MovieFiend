@@ -39,6 +39,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         View rootView = findViewById(R.id.details_root);
         mMovieDetailsHolder = new MovieDetailsHolder(rootView);
         mMovieDetailsHolder.setMovie(this, movie);
+        mMovieDetailsHolder.animateRatingBubble();
 
         // Init loader
         getLoaderManager().initLoader(LOADER_ID, null, this);

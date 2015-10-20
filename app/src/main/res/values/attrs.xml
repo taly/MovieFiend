@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RatingBubbleView">
+        <attr name="bubbleColor" format="color" />
+    </declare-styleable>
+</resources>
