@@ -28,7 +28,7 @@ public class MovieDetailsFragment extends Fragment {
         // Set movie
         mMovieDetailsHolder = new MovieDetailsHolder(rootView);
         mMovieDetailsHolder.disableSimilarMovies();
-        mMovieDetailsHolder.setMovie(movie);
+        mMovieDetailsHolder.setMovie(movie, false);
 
         return rootView;
     }

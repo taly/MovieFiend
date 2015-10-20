@@ -13,12 +13,18 @@ import android.widget.TextView;
  */
 public class RatingBubbleView extends TextView {
 
+    private float mCenterX;
+    private float mCenterY;
+    private float mTextShift;
+
     private Paint mBubblePaint;
     private Paint mBackgroundBubble1Paint;
     private Paint mBackgroundBubble2Paint;
     private Paint mTextPaint;
 
-    private int mBubbleColor;
+    private int mColor1;
+    private int mColor2;
+    private int mColor3;
     private double mFinalRating;
     private String mBubbleText;
 
@@ -28,7 +34,9 @@ public class RatingBubbleView extends TextView {
         // Get attributes
         TypedArray a = context.getTheme().obtainStyledAttributes(attributes, R.styleable.RatingBubbleView, 0, 0);
         try {
-            mBubbleColor = a.getColor(R.styleable.RatingBubbleView_bubbleColor, 0);
+            mColor1 = a.getColor(R.styleable.RatingBubbleView_color1, 0);
+            mColor2 = a.getColor(R.styleable.RatingBubbleView_color2, 0);
+            mColor3 = a.getColor(R.styleable.RatingBubbleView_color3, 0);
             mBubbleText = a.getString(R.styleable.RatingBubbleView_bubbleText);
         }
         finally {
@@ -39,8 +47,10 @@ public class RatingBubbleView extends TextView {
     }
 
     private void init() {
+
+        // Paints
         mBubblePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mBubblePaint.setColor(mBubbleColor);
+        mBubblePaint.setColor(mColor1);
 
         mBackgroundBubble1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBackgroundBubble1Paint.setColor(Color.DKGRAY);
@@ -51,28 +61,44 @@ public class RatingBubbleView extends TextView {
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(Color.DKGRAY);
         mTextPaint.setTextSize(45);
+
+        // Dimensions
+        mCenterX = getWidth() / 2;
+        mCenterY = getHeight() / 2;
+        mTextShift = mTextPaint.ascent() + mTextPaint.descent();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        // TODO CALCULATE THESE OUTSIDE!
+        // Get dimensions
         int x = canvas.getWidth() / 2;
         int y = canvas.getHeight() / 2;
         float outerRadius = x;
 
         // Background
         canvas.drawCircle(x, y, outerRadius, mBackgroundBubble1Paint);
-        canvas.drawCircle(x, y, outerRadius*0.9f, mBackgroundBubble2Paint);
+        canvas.drawCircle(x, y, outerRadius * 0.9f, mBackgroundBubble2Paint);
 
         // Circle
         // TODO add padding
         canvas.drawCircle(x, y, outerRadius*0.85f, mBubblePaint);
 
         // Text
-        float a = (mTextPaint.ascent() + mTextPaint.descent());
-        canvas.drawText(mBubbleText, x + a, y - a / 2, mTextPaint);
+        canvas.drawText(mBubbleText, x + mTextShift, y - mTextShift / 2, mTextPaint);
+    }
+
+    public int getColor1() {
+        return mColor1;
+    }
+
+    public int getColor2() {
+        return mColor2;
+    }
+
+    public int getColor3() {
+        return mColor3;
     }
 
     public void setFinalRating(double rating) {
@@ -86,8 +112,7 @@ public class RatingBubbleView extends TextView {
     }
 
     public void setBubbleColor(int color) {
-        mBubbleColor = color;
-        mBubblePaint.setColor(mBubbleColor);
+        mBubblePaint.setColor(color);
         invalidate();
     }
 }

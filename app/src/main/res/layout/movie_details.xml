@@ -47,7 +47,10 @@
                     <com.example.trabinerson.moviefiend.RatingBubbleView
                         android:id="@+id/rating_bubble"
                         android:layout_width="30dp"
-                        android:layout_height="30dp"/>
+                        android:layout_height="30dp"
+                        custom:color1="@color/rating_red"
+                        custom:color2="@color/rating_yellow"
+                        custom:color3="@color/rating_green"/>
                 </LinearLayout>
 
                 <FrameLayout
