@@ -39,22 +39,32 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
         for (int i = 0; i < parcel.length; i++) {
             mSimilarMovies[i] = (Movie)parcel[i];
         }
-
         Log.i(LOG_TAG, "Unbundled " + mSimilarMovies.length + " movies");
 
         // Keep dots in memory
+        initProgressDots();
+
+        // Instantiate a ViewPager and a PagerAdapter
+        initPagerAndAdapter();
+    }
+
+    private void initProgressDots() {
         int[] dotIds = {
                 R.id.imageview_dot1,
                 R.id.imageview_dot2,
                 R.id.imageview_dot3,
                 R.id.imageview_dot4,
-                R.id.imageview_dot5};
+                R.id.imageview_dot5
+        };
         mDotViews = new ImageView[mSimilarMovies.length];
         for (int i = 0; i < mSimilarMovies.length; i++) {
             mDotViews[i] = (ImageView) findViewById(dotIds[i]);
         }
+    }
 
-        // Instantiate a ViewPager and a PagerAdapter
+    private void initPagerAndAdapter() {
+
+        // Pager
         mPager = (ViewPager) findViewById(R.id.pager_similar_movies);
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -76,23 +86,20 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
             }
 
             @Override
-            public void onPageSelected(int position) {
-
-            }
+            public void onPageSelected(int position) { }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
+            public void onPageScrollStateChanged(int state) { }
         });
+
+        // Adapter
         mPagerAdapter = new SimilarMoviesPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
     }
 
 
     /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
+     * A simple pager adapter that represents 5 MovieDetailsFragment objects, in sequence.
      */
     private class SimilarMoviesPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -122,8 +129,5 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
         public int getCount() {
             return mSimilarMovies.length;
         }
-
-
-
     }
 }
