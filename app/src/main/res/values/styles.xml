@@ -5,4 +5,11 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="ProgressDot">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">10dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:src">@drawable/dot</item>
+    </style>
+
 </resources>

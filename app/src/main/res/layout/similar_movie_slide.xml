@@ -21,35 +21,20 @@
         android:background="@color/header_grey"
         android:paddingBottom="5dp">
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:id="@+id/imageview_dot1"
-            android:layout_margin="5dp"
-            android:src="@drawable/dot"/>
+            style="@style/ProgressDot"
+            android:id="@+id/imageview_dot1" />
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:id="@+id/imageview_dot2"
-            android:layout_margin="5dp"
-            android:src="@drawable/dot"/>
+            style="@style/ProgressDot"
+            android:id="@+id/imageview_dot2" />
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:id="@+id/imageview_dot3"
-            android:layout_margin="5dp"
-            android:src="@drawable/dot"/>
+            style="@style/ProgressDot"
+            android:id="@+id/imageview_dot3" />
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:id="@+id/imageview_dot4"
-            android:layout_margin="5dp"
-            android:src="@drawable/dot"/>
+            style="@style/ProgressDot"
+            android:id="@+id/imageview_dot4" />
         <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:id="@+id/imageview_dot5"
-            android:layout_margin="5dp"
-            android:src="@drawable/dot"/>
+            style="@style/ProgressDot"
+            android:id="@+id/imageview_dot5" />
     </LinearLayout>
 
     <android.support.v4.view.ViewPager
