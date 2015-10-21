@@ -95,29 +95,17 @@ public class MovieDetailsHolder {
         boolean doubleColorAnimation = (rating > 5);
 
         // Background animator - from red to yellow to green (stop at target rating)
-        AnimatorSet backgroundAnimator = new AnimatorSet();
-
-        // Create first animation and add to set
-        int animator1TargetColor = doubleColorAnimation ? color2 : targetColor;
-        ObjectAnimator backgroundAnimator1 = ObjectAnimator.ofArgb(
-                mRatingBubble, "bubbleColor", color1, animator1TargetColor);
-        AnimatorSet.Builder builder = backgroundAnimator.play(backgroundAnimator1);
-
+        String propertyName = "bubbleColor";
+        ObjectAnimator backgroundAnimator;
         if (doubleColorAnimation) {
-
-            // Create second animation and add to set
-            ObjectAnimator backgroundAnimator2 = ObjectAnimator.ofArgb(
-                    mRatingBubble, "bubbleColor", color2, targetColor);
-            builder.before(backgroundAnimator2);
-
-            // Normalize durations so that transition is smooth
-            int animation1Duration = (int)(totalDuration * (5f / rating));
-            backgroundAnimator1.setDuration(animation1Duration);
-            backgroundAnimator2.setDuration(totalDuration - animation1Duration);
+            backgroundAnimator = ObjectAnimator.ofArgb(
+                    mRatingBubble, propertyName, color1, color2, targetColor);
         }
         else {
-            backgroundAnimator1.setDuration(totalDuration);
+            backgroundAnimator = ObjectAnimator.ofArgb(
+                    mRatingBubble, propertyName, color1, targetColor);
         }
+        backgroundAnimator.setDuration(totalDuration);
 
         // Number animator
         ObjectAnimator numberAnimator = ObjectAnimator.ofFloat(
