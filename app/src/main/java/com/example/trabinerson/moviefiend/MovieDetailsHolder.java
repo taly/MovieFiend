@@ -36,7 +36,6 @@ public class MovieDetailsHolder {
     public void setMovie(Movie movie, boolean animate) {
         ImageLoader imageLoader = RequestQueueSingleton.getInstance().getImageLoader();
         mNameView.setText(movie.getName());
-        mRatingBubble.setFinalRating(movie.getRating());
         mPosterView.setImageUrl(movie.getPosterUrl(), imageLoader);
         mDescriptionView.setText(movie.getDescription());
 
@@ -89,7 +88,6 @@ public class MovieDetailsHolder {
 
         // Preliminaries
         double rating = movie.getRating();
-        int totalDuration = RATING_ANIMATION_DURATION;
         int color1 = mRatingBubble.getColor1();
         int color2 = mRatingBubble.getColor2();
         boolean doubleColorAnimation = (rating > 5);
@@ -105,12 +103,12 @@ public class MovieDetailsHolder {
             backgroundAnimator = ObjectAnimator.ofArgb(
                     mRatingBubble, propertyName, color1, targetColor);
         }
-        backgroundAnimator.setDuration(totalDuration);
+        backgroundAnimator.setDuration(RATING_ANIMATION_DURATION);
 
         // Number animator
         ObjectAnimator numberAnimator = ObjectAnimator.ofFloat(
                 mRatingBubble, "rating", 0.0f, (float)rating);
-        numberAnimator.setDuration(totalDuration);
+        numberAnimator.setDuration(RATING_ANIMATION_DURATION);
 
         // All together now
         AnimatorSet animatorSet = new AnimatorSet();

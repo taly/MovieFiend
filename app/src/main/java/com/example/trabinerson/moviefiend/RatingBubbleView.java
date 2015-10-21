@@ -13,8 +13,6 @@ import android.widget.TextView;
  */
 public class RatingBubbleView extends TextView {
 
-    private float mCenterX;
-    private float mCenterY;
     private float mTextShift;
 
     private Paint mBubblePaint;
@@ -25,7 +23,6 @@ public class RatingBubbleView extends TextView {
     private int mColor1;
     private int mColor2;
     private int mColor3;
-    private double mFinalRating;
     private String mBubbleText;
 
     public RatingBubbleView(Context context, AttributeSet attributes) {
@@ -63,8 +60,6 @@ public class RatingBubbleView extends TextView {
         mTextPaint.setTextSize(45);
 
         // Dimensions
-        mCenterX = getWidth() / 2;
-        mCenterY = getHeight() / 2;
         mTextShift = mTextPaint.ascent() + mTextPaint.descent();
     }
 
@@ -99,11 +94,6 @@ public class RatingBubbleView extends TextView {
 
     public int getColor3() {
         return mColor3;
-    }
-
-    public void setFinalRating(double rating) {
-        mFinalRating = rating;
-        mBubbleText = Double.toString(rating);
     }
 
     public void setRating(float rating) {
