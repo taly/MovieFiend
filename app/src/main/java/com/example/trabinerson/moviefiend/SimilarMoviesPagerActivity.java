@@ -21,6 +21,8 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
     public static final int NUM_MOVIES = 5;
 
     private static final String LOG_TAG = SimilarMoviesPagerActivity.class.getSimpleName();
+    private static final float ENLARGED_DOT_SCALE = 1.5f;
+    private static final int DOT_ANIMATION_DURATION = 200;
 
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -60,6 +62,8 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
         for (int i = 0; i < mSimilarMovies.length; i++) {
             mDotViews[i] = (ImageView) findViewById(dotIds[i]);
         }
+        mDotViews[0].setScaleX(ENLARGED_DOT_SCALE);
+        mDotViews[0].setScaleY(ENLARGED_DOT_SCALE);
     }
 
     private void initPagerAndAdapter() {
@@ -68,21 +72,28 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager_similar_movies);
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                // Highlight correct dot
-                float activeScale = 1.5f;
-                int inactiveScale = 1;
-                for (int i = 0; i < mSimilarMovies.length; i++) {
-                    if (i == position) {
-                        mDotViews[i].setScaleX(activeScale);
-                        mDotViews[i].setScaleY(activeScale);
-                    }
-                    else {
-                        mDotViews[i].setScaleX(inactiveScale);
-                        mDotViews[i].setScaleY(inactiveScale);
-                    }
+            public void onPageScrolled(
+                    int position, float positionOffset, int positionOffsetPixels) {
+                if (positionOffset == 0) {
+                    return;
                 }
+
+                // Get src and dest dots
+                int indexShift = (int) (positionOffset / positionOffset);
+                int destPosition = position + indexShift;
+                ImageView src = mDotViews[position];
+                ImageView dest = mDotViews[destPosition];
+
+                // Calculate interpolated scales of each
+                float rangeSize = ENLARGED_DOT_SCALE - 1;
+                float srcScale = ENLARGED_DOT_SCALE - rangeSize * positionOffset;
+                float destScale = 1 + rangeSize * positionOffset;
+
+                // Set scales
+                src.setScaleX(srcScale);
+                src.setScaleY(srcScale);
+                dest.setScaleX(destScale);
+                dest.setScaleY(destScale);
             }
 
             @Override
@@ -103,25 +114,16 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
      */
     private class SimilarMoviesPagerAdapter extends FragmentStatePagerAdapter {
 
-        private MovieDetailsFragment[] mFragments;
-
         public SimilarMoviesPagerAdapter(FragmentManager fm) {
             super(fm);
-
-            // Create fragments in advance
-            mFragments = new MovieDetailsFragment[mSimilarMovies.length];
-            for (int i = 0; i < mSimilarMovies.length; i++) {
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(MovieDetailsFragment.ARG_KEY_MOVIE, mSimilarMovies[i]);
-                MovieDetailsFragment fragment = new MovieDetailsFragment();
-                fragment.setArguments(bundle);
-                mFragments[i] = fragment;
-            }
         }
 
         @Override
         public Fragment getItem(int position) {
-            MovieDetailsFragment fragment = mFragments[position];
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(MovieDetailsFragment.ARG_KEY_MOVIE, mSimilarMovies[position]);
+            MovieDetailsFragment fragment = new MovieDetailsFragment();
+            fragment.setArguments(bundle);
             return fragment;
         }
 

@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class DetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Movie[]> {
 
     public static final String INTENT_KEY_MOVIE = "Movie";
-    private static final int LOADER_ID = 2;
+    private static final int LOADER_ID = 1;
 
     private static final String LOG_TAG = DetailsActivity.class.getSimpleName();
     private static final String INSTANCE_KEY_ANIMATE_RATING = "AnimateRating";

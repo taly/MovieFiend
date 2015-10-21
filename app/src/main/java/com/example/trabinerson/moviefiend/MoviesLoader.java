@@ -34,7 +34,7 @@ public abstract class MoviesLoader extends Loader<Movie[]> {
     private static final String JSON_KEY_POSTER_PATH = "poster_path";
 
     private static final String ACTIVITY_TAG = "MovieFiend";
-    protected static String LOG_TAG = MoviesLoader.class.getSimpleName();
+    private static String LOG_TAG = MoviesLoader.class.getSimpleName();
 
     public MoviesLoader(Context context) {
         super(context);
