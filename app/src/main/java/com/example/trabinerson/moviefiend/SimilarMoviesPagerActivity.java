@@ -74,26 +74,24 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
             @Override
             public void onPageScrolled(
                     int position, float positionOffset, int positionOffsetPixels) {
-                if (positionOffset == 0) {
-                    return;
-                }
 
-                // Get src and dest dots
-                int indexShift = (int) (positionOffset / positionOffset);
-                int destPosition = position + indexShift;
-                ImageView src = mDotViews[position];
-                ImageView dest = mDotViews[destPosition];
-
-                // Calculate interpolated scales of each
+                float fullPosition = position + positionOffset;
                 float rangeSize = ENLARGED_DOT_SCALE - 1;
-                float srcScale = ENLARGED_DOT_SCALE - rangeSize * positionOffset;
-                float destScale = 1 + rangeSize * positionOffset;
 
-                // Set scales
-                src.setScaleX(srcScale);
-                src.setScaleY(srcScale);
-                dest.setScaleX(destScale);
-                dest.setScaleY(destScale);
+                for (int i = 0; i < mDotViews.length; i++) {
+                    ImageView dot = mDotViews[i];
+                    float dist = fullPosition - i;
+                    float absDist = Math.abs(dist);
+                    if (absDist <= 1) {
+                        float scale =  ENLARGED_DOT_SCALE - rangeSize * absDist;
+                        dot.setScaleX(scale);
+                        dot.setScaleY(scale);
+                    }
+                    else {
+                        dot.setScaleX(1);
+                        dot.setScaleY(1);
+                    }
+                }
             }
 
             @Override
