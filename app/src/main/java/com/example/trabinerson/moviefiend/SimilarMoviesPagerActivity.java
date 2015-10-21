@@ -103,25 +103,16 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
      */
     private class SimilarMoviesPagerAdapter extends FragmentStatePagerAdapter {
 
-        private MovieDetailsFragment[] mFragments;
-
         public SimilarMoviesPagerAdapter(FragmentManager fm) {
             super(fm);
-
-            // Create fragments in advance
-            mFragments = new MovieDetailsFragment[mSimilarMovies.length];
-            for (int i = 0; i < mSimilarMovies.length; i++) {
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(MovieDetailsFragment.ARG_KEY_MOVIE, mSimilarMovies[i]);
-                MovieDetailsFragment fragment = new MovieDetailsFragment();
-                fragment.setArguments(bundle);
-                mFragments[i] = fragment;
-            }
         }
 
         @Override
         public Fragment getItem(int position) {
-            MovieDetailsFragment fragment = mFragments[position];
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(MovieDetailsFragment.ARG_KEY_MOVIE, mSimilarMovies[position]);
+            MovieDetailsFragment fragment = new MovieDetailsFragment();
+            fragment.setArguments(bundle);
             return fragment;
         }
 
