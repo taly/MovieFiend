@@ -19,6 +19,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     private static final int LOADER_ID = 2;
 
     private static final String LOG_TAG = DetailsActivity.class.getSimpleName();
+    private static final String INSTANCE_KEY_ANIMATE_RATING = "AnimateRating";
 
     private int mMovieId;
     private Movie[] mSimilarMovies;
@@ -36,12 +37,22 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         Log.i(LOG_TAG, "Unbundled " + movie.getName());
 
         // Set movie on screen
+        boolean animate = true;
+        if (savedInstanceState != null) {
+            animate = savedInstanceState.getBoolean(INSTANCE_KEY_ANIMATE_RATING, true);
+        }
         View rootView = findViewById(R.id.details_root);
         mMovieDetailsHolder = new MovieDetailsHolder(rootView);
-        mMovieDetailsHolder.setMovie(movie, true);
+        mMovieDetailsHolder.setMovie(movie, animate);
 
         // Init loader
         getLoaderManager().initLoader(LOADER_ID, null, this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(INSTANCE_KEY_ANIMATE_RATING, false);
     }
 
     public void onSimilarMoviesClicked(View view) {
