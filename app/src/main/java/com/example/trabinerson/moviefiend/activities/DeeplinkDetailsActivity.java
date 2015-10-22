@@ -1,6 +1,7 @@
 package com.example.trabinerson.moviefiend.activities;
 
 import android.app.LoaderManager;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
@@ -50,12 +51,16 @@ public class DeeplinkDetailsActivity
         else {
             Movie movie = data[0]; // SingleMovieLoader returns 1 movie
 
-            // Start DetailsActivity
+            // Create DetailsActivity
             Bundle bundle = new Bundle();
             bundle.putParcelable(DetailsActivity.INTENT_KEY_MOVIE, movie);
             Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
             intent.putExtras(bundle);
-            startActivity(intent);
+
+            // Add parent to backstack and start
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            stackBuilder.addNextIntentWithParentStack(intent)
+            .startActivities();
         }
 
         // Our work here is done
