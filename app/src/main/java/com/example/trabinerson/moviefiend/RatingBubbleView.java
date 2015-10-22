@@ -16,6 +16,7 @@ import android.widget.TextView;
 public class RatingBubbleView extends TextView {
 
     private static final int RATING_ANIMATION_DURATION = 1000;
+    privaet static final String ANIMATION_PROPERTY = "ratingValue";
 
     private float mTextShift;
 
@@ -95,7 +96,7 @@ public class RatingBubbleView extends TextView {
 
     public void setRating(float rating, boolean animate) {
         if (animate && rating > 0) {
-            ObjectAnimator animator = ObjectAnimator.ofFloat(this, "ratingValue", 0f, rating);
+            ObjectAnimator animator = ObjectAnimator.ofFloat(this, ANIMATION_PROPERTY, 0f, rating);
             animator.setDuration(RATING_ANIMATION_DURATION);
             animator.start();
         }
