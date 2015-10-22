@@ -25,9 +25,9 @@ public class RatingBubbleView extends TextView {
     private Paint mBackgroundBubble2Paint;
     private Paint mTextPaint;
 
-    private int mColor1;
-    private int mColor2;
-    private int mColor3;
+    private int mColorLow;
+    private int mColorMedium;
+    private int mColorHigh;
     private String mBubbleText;
 
     public RatingBubbleView(Context context, AttributeSet attributes) {
@@ -36,9 +36,9 @@ public class RatingBubbleView extends TextView {
         // Get attributes
         TypedArray a = context.getTheme().obtainStyledAttributes(attributes, R.styleable.RatingBubbleView, 0, 0);
         try {
-            mColor1 = a.getColor(R.styleable.RatingBubbleView_color1, 0);
-            mColor2 = a.getColor(R.styleable.RatingBubbleView_color2, 0);
-            mColor3 = a.getColor(R.styleable.RatingBubbleView_color3, 0);
+            mColorLow = a.getColor(R.styleable.RatingBubbleView_colorLow, 0);
+            mColorMedium = a.getColor(R.styleable.RatingBubbleView_colorMedium, 0);
+            mColorHigh = a.getColor(R.styleable.RatingBubbleView_colorHigh, 0);
             mBubbleText = a.getString(R.styleable.RatingBubbleView_bubbleText);
         }
         finally {
@@ -52,7 +52,7 @@ public class RatingBubbleView extends TextView {
 
         // Paints
         mBubblePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mBubblePaint.setColor(mColor1);
+        mBubblePaint.setColor(mColorLow);
 
         mBackgroundBubble1Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBackgroundBubble1Paint.setColor(Color.DKGRAY);
@@ -120,9 +120,9 @@ public class RatingBubbleView extends TextView {
     private int ratingToColor(float rating) {
         Integer targetColor;
         float normalizedRating;
-        Integer color1 = new Integer(mColor1);
-        Integer color2 = new Integer(mColor2);
-        Integer color3 = new Integer(mColor3);
+        Integer color1 = new Integer(mColorLow);
+        Integer color2 = new Integer(mColorMedium);
+        Integer color3 = new Integer(mColorHigh);
         ArgbEvaluator evaluator = new ArgbEvaluator();
         if (rating <= 5) {
             normalizedRating = rating / 5f;
