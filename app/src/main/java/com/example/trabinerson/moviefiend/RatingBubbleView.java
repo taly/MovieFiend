@@ -74,7 +74,7 @@ public class RatingBubbleView extends TextView {
         // Get dimensions
         int x = canvas.getWidth() / 2;
         int y = canvas.getHeight() / 2;
-        float outerRadius = x;
+        float outerRadius = Math.min(x, y);
 
         // Background
         canvas.drawCircle(x, y, outerRadius, mBackgroundBubble1Paint);
