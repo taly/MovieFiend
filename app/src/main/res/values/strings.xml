@@ -6,4 +6,5 @@
     <string name="rating_format">Rating: <xliff:g id="rating">%.1f</xliff:g></string>
     <string name="rating_standalone">Rating:</string>
     <string name="similar_movies">Similar Movies</string>
+    <string name="movie_loading">Your movie is coming soon...</string>
 </resources>

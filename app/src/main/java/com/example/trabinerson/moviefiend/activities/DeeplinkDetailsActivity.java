@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.trabinerson.moviefiend.Movie;
+import com.example.trabinerson.moviefiend.R;
 import com.example.trabinerson.moviefiend.loaders.SingleMovieLoader;
 
 /**
@@ -22,6 +23,8 @@ public class DeeplinkDetailsActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.movie_loading);
+
         Intent intent = getIntent();
         String data = intent.getDataString();
 
