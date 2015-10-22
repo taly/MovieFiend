@@ -1,4 +1,4 @@
-package com.example.trabinerson.moviefiend;
+package com.example.trabinerson.moviefiend.loaders;
 
 import android.content.Context;
 import android.net.Uri;

@@ -1,4 +1,4 @@
-package com.example.trabinerson.moviefiend;
+package com.example.trabinerson.moviefiend.loaders;
 
 import android.content.Context;
 import android.content.Loader;
@@ -9,6 +9,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.trabinerson.moviefiend.Movie;
+import com.example.trabinerson.moviefiend.RequestQueueSingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;

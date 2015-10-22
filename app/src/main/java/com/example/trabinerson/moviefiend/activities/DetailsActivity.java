@@ -1,4 +1,4 @@
-package com.example.trabinerson.moviefiend;
+package com.example.trabinerson.moviefiend.activities;
 
 import android.app.LoaderManager;
 import android.content.Intent;
@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
+import com.example.trabinerson.moviefiend.Movie;
+import com.example.trabinerson.moviefiend.MovieDetailsHolder;
+import com.example.trabinerson.moviefiend.R;
+import com.example.trabinerson.moviefiend.loaders.SimilarMoviesLoader;
 
 import java.util.Arrays;
 

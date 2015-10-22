@@ -1,10 +1,13 @@
-package com.example.trabinerson.moviefiend;
+package com.example.trabinerson.moviefiend.activities;
 
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.trabinerson.moviefiend.Movie;
+import com.example.trabinerson.moviefiend.loaders.SingleMovieLoader;
 
 /**
  * An interim activity that loads details for a movie and starts the details activity.
