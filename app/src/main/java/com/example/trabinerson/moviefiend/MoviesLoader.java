@@ -91,23 +91,34 @@ public abstract class MoviesLoader extends Loader<Movie[]> {
         return super.onCancelLoad();
     }
 
-    private Movie[] getMoviesFromResponse(JSONObject response) {
+    protected Movie parseResponseMovie(JSONObject rawMovie) {
+        try {
+            int id = rawMovie.getInt(JSON_KEY_ID);
+            String name = rawMovie.getString(JSON_KEY_MOVIE_NAME);
+            Double rating = rawMovie.getDouble(JSON_KEY_MOVIE_RATING);
+            String description = rawMovie.getString(JSON_KEY_MOVIE_DESCRIPTION);
+            String posterPath = rawMovie.getString(JSON_KEY_POSTER_PATH);
+            String posterUrl = Uri.parse(IMAGES_API_BASE_URL).buildUpon()
+                    .appendEncodedPath(posterPath)
+                    .build().toString();
+            Log.v(LOG_TAG, "Poster URL for the movie '" + name + ": " + posterUrl);
+            Movie movie = new Movie(id, name, rating, posterUrl, description);
+            return movie;
+        }
+        catch (JSONException e) {
+            Log.e(LOG_TAG, "Exception while processing movie from server", e);
+            return null;
+        }
+    }
+
+    protected Movie[] getMoviesFromResponse(JSONObject response) {
         try {
             JSONArray responseArray = response.getJSONArray(JSON_KEY_RESULTS);
             Log.i(LOG_TAG, "Found " + responseArray.length() + " movies");
             ArrayList<Movie> data = new ArrayList<>();
             for (int i = 0; i < responseArray.length(); i++) {
                 JSONObject currentRaw = responseArray.getJSONObject(i);
-                int id = currentRaw.getInt(JSON_KEY_ID);
-                String name = currentRaw.getString(JSON_KEY_MOVIE_NAME);
-                Double rating = currentRaw.getDouble(JSON_KEY_MOVIE_RATING);
-                String description = currentRaw.getString(JSON_KEY_MOVIE_DESCRIPTION);
-                String posterPath = currentRaw.getString(JSON_KEY_POSTER_PATH);
-                String posterUrl = Uri.parse(IMAGES_API_BASE_URL).buildUpon()
-                        .appendEncodedPath(posterPath)
-                        .build().toString();
-                Log.v(LOG_TAG, "Poster URL for the movie '" + name + ": " + posterUrl);
-                Movie currentMovie = new Movie(id, name, rating, posterUrl, description);
+                Movie currentMovie = parseResponseMovie(currentRaw);
                 data.add(currentMovie);
             }
             Movie[] dataArray = data.toArray(new Movie[data.size()]);

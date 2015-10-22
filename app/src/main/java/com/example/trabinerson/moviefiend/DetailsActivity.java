@@ -13,7 +13,8 @@ import java.util.Arrays;
 /**
  * The activity that shows movie details.
  */
-public class DetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Movie[]> {
+public class DetailsActivity
+        extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Movie[]> {
 
     public static final String INTENT_KEY_MOVIE = "Movie";
     private static final int LOADER_ID = 1;

@@ -28,16 +28,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.trabinerson.moviefiend.MainActivity" />
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:scheme="moviefiend"
-                    android:host="movie-details"/>
-            </intent-filter>
-
         </activity>
 
         <activity
@@ -47,6 +37,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.trabinerson.moviefiend.DetailsActivity" />
         </activity>
+
+        <activity android:name=".DeeplinkDetailsActivity"
+            android:label="@string/details_app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="moviefiend"
+                    android:host="movie-details"/>
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
