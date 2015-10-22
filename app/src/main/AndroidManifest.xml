@@ -22,16 +22,26 @@
 
         <activity
             android:name=".DetailsActivity"
-            android:label="@string/deatils_app_name"
-            android:parentActivityName=".MainActivity" >
+            android:label="@string/details_app_name"
+            android:parentActivityName=".MainActivity">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.trabinerson.moviefiend.MainActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="moviefiend"
+                    android:host="movie-details"/>
+            </intent-filter>
+
         </activity>
 
         <activity
             android:name=".SimilarMoviesPagerActivity"
-            android:label="@string/deatils_app_name"
             android:parentActivityName=".DetailsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
