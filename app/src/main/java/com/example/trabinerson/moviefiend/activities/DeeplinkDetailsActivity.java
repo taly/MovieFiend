@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.example.trabinerson.moviefiend.Movie;
 import com.example.trabinerson.moviefiend.R;
@@ -28,7 +29,6 @@ public class DeeplinkDetailsActivity
         Intent intent = getIntent();
         String data = intent.getDataString();
 
-        // TODO add validations / defensive code
         String movieId = data.substring(data.lastIndexOf("/") + 1);
         mMovieId = Integer.parseInt(movieId);
 
@@ -44,14 +44,19 @@ public class DeeplinkDetailsActivity
     @Override
     public void onLoadFinished(Loader<Movie[]> loader, Movie[] data) {
 
-        Movie movie = data[0]; // SingleMovieLoader returns 1 movie
+        if (data == null || data.length == 0) {
+            Toast.makeText(this, "No movie found with ID " + mMovieId, Toast.LENGTH_LONG).show();
+        }
+        else {
+            Movie movie = data[0]; // SingleMovieLoader returns 1 movie
 
-        // Start DetailsActivity
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(DetailsActivity.INTENT_KEY_MOVIE, movie);
-        Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
+            // Start DetailsActivity
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(DetailsActivity.INTENT_KEY_MOVIE, movie);
+            Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
 
         // Our work here is done
         finish();

@@ -78,6 +78,7 @@ public abstract class MoviesLoader extends Loader<Movie[]> {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e(LOG_TAG, "Error while parsing movies from server", error);
+                        deliverResult(null);
                     }
                 });
 
