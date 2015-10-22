@@ -61,10 +61,6 @@ public class RatingBubbleView extends TextView {
 
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(Color.DKGRAY);
-        mTextPaint.setTextSize(45);
-
-        // Dimensions
-        mTextShift = mTextPaint.ascent() + mTextPaint.descent();
     }
 
     @Override
@@ -85,7 +81,16 @@ public class RatingBubbleView extends TextView {
         canvas.drawCircle(x, y, outerRadius * 0.85f, mBubblePaint);
 
         // Text
-        canvas.drawText(mBubbleText, x + mTextShift, y - mTextShift / 2, mTextPaint);
+        float textWidth = mTextPaint.measureText(mBubbleText);
+        canvas.drawText(mBubbleText, x - textWidth/2, y - mTextShift/2, mTextPaint);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        int minDim = Math.min(w, h);
+        mTextPaint.setTextSize(minDim * 0.45f);
+        mTextShift = mTextPaint.ascent() + mTextPaint.descent();
     }
 
     public void setRating(float rating, boolean animate) {
