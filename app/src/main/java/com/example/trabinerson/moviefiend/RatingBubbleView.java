@@ -1,5 +1,7 @@
 package com.example.trabinerson.moviefiend;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -12,6 +14,8 @@ import android.widget.TextView;
  * A container for a movie's rating.
  */
 public class RatingBubbleView extends TextView {
+
+    private static final int RATING_ANIMATION_DURATION = 1000;
 
     private float mTextShift;
 
@@ -78,31 +82,50 @@ public class RatingBubbleView extends TextView {
 
         // Circle
         // TODO add padding
-        canvas.drawCircle(x, y, outerRadius*0.85f, mBubblePaint);
+        canvas.drawCircle(x, y, outerRadius * 0.85f, mBubblePaint);
 
         // Text
         canvas.drawText(mBubbleText, x + mTextShift, y - mTextShift / 2, mTextPaint);
     }
 
-    public int getColor1() {
-        return mColor1;
+    public void setRating(float rating, boolean animate) {
+        if (animate && rating > 0) {
+            ObjectAnimator animator = ObjectAnimator.ofFloat(this, "ratingValue", 0f, rating);
+            animator.setDuration(RATING_ANIMATION_DURATION);
+            animator.start();
+        }
+        else {
+            setRatingValue(rating);
+        }
     }
 
-    public int getColor2() {
-        return mColor2;
-    }
+    public void setRatingValue(float rating) {
 
-    public int getColor3() {
-        return mColor3;
-    }
-
-    public void setRating(float rating) {
+        // Set text
         mBubbleText = String.format("%.1f", rating);
+
+        // Set color
+        int targetColor = ratingToColor(rating);
+        mBubblePaint.setColor(targetColor);
+
         invalidate();
     }
 
-    public void setBubbleColor(int color) {
-        mBubblePaint.setColor(color);
-        invalidate();
+    private int ratingToColor(float rating) {
+        Integer targetColor;
+        float normalizedRating;
+        Integer color1 = new Integer(mColor1);
+        Integer color2 = new Integer(mColor2);
+        Integer color3 = new Integer(mColor3);
+        ArgbEvaluator evaluator = new ArgbEvaluator();
+        if (rating <= 5) {
+            normalizedRating = rating / 5f;
+            targetColor = (Integer) evaluator.evaluate(normalizedRating, color1, color2);
+        }
+        else {
+            normalizedRating = (rating - 5f) / 5f;
+            targetColor = (Integer) evaluator.evaluate(normalizedRating, color2, color3);
+        }
+        return targetColor;
     }
 }

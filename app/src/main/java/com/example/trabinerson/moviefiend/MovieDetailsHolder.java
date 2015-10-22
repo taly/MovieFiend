@@ -1,8 +1,5 @@
 package com.example.trabinerson.moviefiend;
 
-import android.animation.AnimatorSet;
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -14,8 +11,6 @@ import com.android.volley.toolbox.NetworkImageView;
  * Holder for movie-related views.
  */
 public class MovieDetailsHolder {
-
-    private static final int RATING_ANIMATION_DURATION = 1000;
 
     private final NetworkImageView mPosterView;
     private final TextView mNameView;
@@ -40,7 +35,8 @@ public class MovieDetailsHolder {
         mDescriptionView.setText(movie.getDescription());
 
         // Rating bubble
-        initRatingBubble(movie, animate);
+        float rating = (float) movie.getRating();
+        mRatingBubble.setRating(rating, animate);
     }
 
     public void finishLoading() {
@@ -53,66 +49,4 @@ public class MovieDetailsHolder {
         mProgressBar.setVisibility(View.GONE);
     }
 
-    private void initRatingBubble(Movie movie, boolean animate) {
-
-        // Normalize rating
-        float rating = (float)movie.getRating();
-        float normalizedRating;
-
-        // Calculate target color
-        Integer targetColor;
-        Integer color1 = new Integer(mRatingBubble.getColor1());
-        Integer color2 = new Integer(mRatingBubble.getColor2());
-        Integer color3 = new Integer(mRatingBubble.getColor3());
-        ArgbEvaluator evaluator = new ArgbEvaluator();
-        if (rating <= 5) {
-            normalizedRating = rating / 5f;
-            targetColor = (Integer) evaluator.evaluate(normalizedRating, color1, color2);
-        }
-        else {
-            normalizedRating = (rating - 5f) / 5f;
-            targetColor = (Integer) evaluator.evaluate(normalizedRating, color2, color3);
-        }
-
-        // Animate or just set values
-        if (animate && rating > 0) {
-            animateRatingBubble(movie, targetColor.intValue());
-        }
-        else {
-            mRatingBubble.setBubbleColor(targetColor.intValue());
-            mRatingBubble.setRating(rating);
-        }
-    }
-
-    private void animateRatingBubble(Movie movie, int targetColor) {
-
-        // Preliminaries
-        double rating = movie.getRating();
-        int color1 = mRatingBubble.getColor1();
-        int color2 = mRatingBubble.getColor2();
-        boolean doubleColorAnimation = (rating > 5);
-
-        // Background animator - from red to yellow to green (stop at target rating)
-        String propertyName = "bubbleColor";
-        ObjectAnimator backgroundAnimator;
-        if (doubleColorAnimation) {
-            backgroundAnimator = ObjectAnimator.ofArgb(
-                    mRatingBubble, propertyName, color1, color2, targetColor);
-        }
-        else {
-            backgroundAnimator = ObjectAnimator.ofArgb(
-                    mRatingBubble, propertyName, color1, targetColor);
-        }
-        backgroundAnimator.setDuration(RATING_ANIMATION_DURATION);
-
-        // Number animator
-        ObjectAnimator numberAnimator = ObjectAnimator.ofFloat(
-                mRatingBubble, "rating", 0.0f, (float)rating);
-        numberAnimator.setDuration(RATING_ANIMATION_DURATION);
-
-        // All together now
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(backgroundAnimator, numberAnimator);
-        animatorSet.start();
-    }
 }
