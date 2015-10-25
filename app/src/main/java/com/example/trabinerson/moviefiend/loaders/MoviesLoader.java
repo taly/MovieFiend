@@ -1,7 +1,7 @@
 package com.example.trabinerson.moviefiend.loaders;
 
 import android.content.Context;
-import android.content.Loader;
+import android.support.v4.content.Loader;
 import android.net.Uri;
 import android.util.Log;
 

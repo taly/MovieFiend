@@ -1,9 +1,9 @@
 package com.example.trabinerson.moviefiend.activities;
 
-import android.app.LoaderManager;
+import android.support.v4.app.LoaderManager;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
-import android.content.Loader;
+import android.support.v4.content.Loader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -34,7 +34,7 @@ public class DeeplinkDetailsActivity
         mMovieId = Integer.parseInt(movieId);
 
         // Get movie
-        getLoaderManager().initLoader(LOADER_ID, null, this);
+        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @Override

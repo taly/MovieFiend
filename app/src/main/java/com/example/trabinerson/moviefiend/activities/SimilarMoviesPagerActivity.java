@@ -13,7 +13,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.trabinerson.moviefiend.Movie;
-import com.example.trabinerson.moviefiend.MovieDetailsFragment;
+import com.example.trabinerson.moviefiend.fragments.MovieDetailsFragment;
 import com.example.trabinerson.moviefiend.R;
 
 /**

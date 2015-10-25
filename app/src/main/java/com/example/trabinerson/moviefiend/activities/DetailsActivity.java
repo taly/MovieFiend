@@ -1,8 +1,8 @@
 package com.example.trabinerson.moviefiend.activities;
 
-import android.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.content.Intent;
-import android.content.Loader;
+import android.support.v4.app.LoaderManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -52,7 +52,7 @@ public class DetailsActivity
         mMovieDetailsHolder.setMovie(movie, animate);
 
         // Init loader
-        getLoaderManager().initLoader(LOADER_ID, null, this);
+        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @Override
