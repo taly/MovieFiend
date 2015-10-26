@@ -1,30 +1,32 @@
-package com.example.trabinerson.moviefiend.activities;
+package com.example.trabinerson.moviefiend.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.trabinerson.moviefiend.Movie;
-import com.example.trabinerson.moviefiend.fragments.MovieDetailsFragment;
 import com.example.trabinerson.moviefiend.R;
 
 /**
- * An activity that shows a slider between similar movies.
+ * A fragment that shows a slider between similar movies.
  */
-public class SimilarMoviesPagerActivity extends FragmentActivity {
+public class SimilarMoviesPagerFragment extends Fragment {
 
-    public static final String INTENT_KEY_SIMILAR_MOVIES = "SimilarMovies";
+    public static final String ARG_KEY_SIMILAR_MOVIES = "SimilarMovies";
     public static final int NUM_MOVIES = 5;
+    public static final String FRAGMENT_FLAG = "SimilarMovies";
 
-    private static final String LOG_TAG = SimilarMoviesPagerActivity.class.getSimpleName();
+    private static final String LOG_TAG = SimilarMoviesPagerFragment.class.getSimpleName();
     private static final float ENLARGED_DOT_SCALE = 1.5f;
 
     private ViewPager mPager;
@@ -32,14 +34,15 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
     private Movie[] mSimilarMovies;
     private ImageView[] mDotViews;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.similar_movie_slide);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Get movies
-        Intent intent = getIntent();
-        Parcelable[] parcel = intent.getExtras().getParcelableArray(INTENT_KEY_SIMILAR_MOVIES);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
+                R.layout.similar_movie_slide, container, false);
+
+        // Get similar movies
+        Parcelable[] parcel = getArguments().getParcelableArray(ARG_KEY_SIMILAR_MOVIES);
         mSimilarMovies = new Movie[parcel.length];
         for (int i = 0; i < parcel.length; i++) {
             mSimilarMovies[i] = (Movie)parcel[i];
@@ -47,13 +50,15 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
         Log.i(LOG_TAG, "Unbundled " + mSimilarMovies.length + " movies");
 
         // Keep dots in memory
-        initProgressDots();
+        initProgressDots(rootView);
 
         // Instantiate a ViewPager and a PagerAdapter
-        initPagerAndAdapter();
+        initPagerAndAdapter(rootView);
+
+        return rootView;
     }
 
-    private void initProgressDots() {
+    private void initProgressDots(View rootView) {
         int[] dotIds = {
                 R.id.imageview_dot1,
                 R.id.imageview_dot2,
@@ -63,16 +68,16 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
         };
         mDotViews = new ImageView[mSimilarMovies.length];
         for (int i = 0; i < mSimilarMovies.length; i++) {
-            mDotViews[i] = (ImageView) findViewById(dotIds[i]);
+            mDotViews[i] = (ImageView) rootView.findViewById(dotIds[i]);
         }
         mDotViews[0].setScaleX(ENLARGED_DOT_SCALE);
         mDotViews[0].setScaleY(ENLARGED_DOT_SCALE);
     }
 
-    private void initPagerAndAdapter() {
+    private void initPagerAndAdapter(View rootView) {
 
         // Pager
-        mPager = (ViewPager) findViewById(R.id.pager_similar_movies);
+        mPager = (ViewPager) rootView.findViewById(R.id.pager_similar_movies);
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(
@@ -105,7 +110,7 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
         });
 
         // Adapter
-        mPagerAdapter = new SimilarMoviesPagerAdapter(getSupportFragmentManager());
+        mPagerAdapter = new SimilarMoviesPagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
     }
 
@@ -123,6 +128,8 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
             bundle.putParcelable(MovieDetailsFragment.ARG_KEY_MOVIE, mSimilarMovies[position]);
+            bundle.putBoolean(MovieDetailsFragment.ARG_KEY_SHOW_SIMILAR, false);
+            bundle.putBoolean(MovieDetailsFragment.ARG_KEY_ANIMATE_RATING, false);
             MovieDetailsFragment fragment = new MovieDetailsFragment();
             fragment.setArguments(bundle);
             return fragment;

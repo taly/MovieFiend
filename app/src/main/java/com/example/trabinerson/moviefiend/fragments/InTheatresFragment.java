@@ -22,13 +22,13 @@ import com.example.trabinerson.moviefiend.loaders.InTheatresMoviesLoader;
 public class InTheatresFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Movie[]> {
 
-    public interface Callback {
+    public interface InTheatresCallbacks {
         void onMovieClicked(Movie movie);
     }
 
     private static final int LOADER_ID = 1;
 
-    private Callback mCallback;
+    private InTheatresCallbacks mCallback;
     private ListView mMoviesList;
     private InTheatresAdapter mListAdapter;
 
@@ -36,10 +36,10 @@ public class InTheatresFragment extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mCallback = (Callback) context;
+            mCallback = (InTheatresCallbacks) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnMovieClickedListener");
+                    + " must implement InTheatresCallbacks");
         }
     }
 

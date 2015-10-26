@@ -9,8 +9,12 @@ import com.example.trabinerson.moviefiend.Movie;
 import com.example.trabinerson.moviefiend.R;
 import com.example.trabinerson.moviefiend.fragments.InTheatresFragment;
 import com.example.trabinerson.moviefiend.fragments.MovieDetailsFragment;
+import com.example.trabinerson.moviefiend.fragments.SimilarMoviesPagerFragment;
 
-public class MainActivity extends AppCompatActivity implements InTheatresFragment.Callback {
+import java.util.Arrays;
+
+public class MainActivity extends AppCompatActivity
+        implements InTheatresFragment.InTheatresCallbacks, MovieDetailsFragment.MovieDetailsCallbacks {
 
     private FragmentManager mFragmentManager;
 
@@ -46,12 +50,33 @@ public class MainActivity extends AppCompatActivity implements InTheatresFragmen
         fragment.setArguments(bundle);
 
         // Set fragment
+        startFragment(fragment, MovieDetailsFragment.FRAGMENT_FLAG);
+    }
+
+    @Override
+    public void onSimilarMoviesClicked(Movie[] similarMovies) {
+
+        // Create bundle
+        Bundle bundle = new Bundle();
+        int numMovies = Math.min(similarMovies.length, SimilarMoviesPagerFragment.NUM_MOVIES);
+        Movie[] movieSubset = Arrays.copyOfRange(similarMovies, 0, numMovies);
+        bundle.putParcelableArray(SimilarMoviesPagerFragment.ARG_KEY_SIMILAR_MOVIES, movieSubset);
+
+        // Create fragment
+        SimilarMoviesPagerFragment fragment = new SimilarMoviesPagerFragment();
+        fragment.setArguments(bundle);
+
+        // Set fragment
+        startFragment(fragment, SimilarMoviesPagerFragment.FRAGMENT_FLAG);
+    }
+
+    private void startFragment(Fragment fragment, String fragmentFlag) {
         mFragmentManager.beginTransaction()
                 .setCustomAnimations(
                         android.R.anim.slide_in_left,
                         android.R.anim.fade_out)
                 .replace(R.id.fragment_container, fragment)
-                .addToBackStack(MovieDetailsFragment.FRAGMENT_FLAG)
+                .addToBackStack(fragmentFlag)
                 .commit();
     }
 }
