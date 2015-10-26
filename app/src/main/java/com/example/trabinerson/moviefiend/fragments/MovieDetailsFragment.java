@@ -45,6 +45,24 @@ public class MovieDetailsFragment extends Fragment
     private boolean mAnimateRating;
     private boolean mShowSimilar;
 
+    public static MovieDetailsFragment createFragment(
+            int movieId, Movie movie, boolean animateRating, boolean showSimilarMovies) {
+
+        // Create bundle
+        Bundle bundle = new Bundle();
+        bundle.putInt(ARG_KEY_MOVIE_ID, movieId);
+        if (movie != null) {
+            bundle.putParcelable(ARG_KEY_MOVIE, movie);
+        }
+        bundle.putBoolean(ARG_KEY_ANIMATE_RATING, animateRating);
+        bundle.putBoolean(ARG_KEY_SHOW_SIMILAR, showSimilarMovies);
+
+        // Create fragment
+        MovieDetailsFragment fragment = new MovieDetailsFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

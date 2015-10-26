@@ -41,16 +41,7 @@ public class MainActivity extends AppCompatActivity
                 // Get movie ID
                 String movieIdStr = Uri.parse(data).getLastPathSegment();
                 int movieId = Integer.parseInt(movieIdStr);
-
-                // Create bundle
-                Bundle bundle = new Bundle();
-                bundle.putInt(MovieDetailsFragment.ARG_KEY_MOVIE_ID, movieId);
-                bundle.putBoolean(MovieDetailsFragment.ARG_KEY_SHOW_SIMILAR, true);
-                bundle.putBoolean(MovieDetailsFragment.ARG_KEY_ANIMATE_RATING, true);
-
-                // Create fragment
-                fragment = new MovieDetailsFragment();
-                fragment.setArguments(bundle);
+                fragment = MovieDetailsFragment.createFragment(movieId, null, true, true);
 
             } else {
                 fragment = new InTheatresFragment();
@@ -64,19 +55,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onMovieClicked(Movie movie) {
-
-        // Create bundle
-        Bundle bundle = new Bundle();
-        bundle.putInt(MovieDetailsFragment.ARG_KEY_MOVIE_ID, movie.getId());
-        bundle.putParcelable(MovieDetailsFragment.ARG_KEY_MOVIE, movie);
-        bundle.putBoolean(MovieDetailsFragment.ARG_KEY_ANIMATE_RATING, true);
-        bundle.putBoolean(MovieDetailsFragment.ARG_KEY_SHOW_SIMILAR, true);
-
-        // Create fragment
-        MovieDetailsFragment fragment = new MovieDetailsFragment();
-        fragment.setArguments(bundle);
-
-        // Set fragment
+        MovieDetailsFragment fragment = MovieDetailsFragment.createFragment(
+                movie.getId(), movie, true, true);
         startFragment(fragment, MovieDetailsFragment.FRAGMENT_FLAG);
     }
 

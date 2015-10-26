@@ -126,14 +126,9 @@ public class SimilarMoviesPagerFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            Bundle bundle = new Bundle();
             Movie movie = mSimilarMovies[position];
-            bundle.putInt(MovieDetailsFragment.ARG_KEY_MOVIE_ID, movie.getId());
-            bundle.putParcelable(MovieDetailsFragment.ARG_KEY_MOVIE, movie);
-            bundle.putBoolean(MovieDetailsFragment.ARG_KEY_SHOW_SIMILAR, false);
-            bundle.putBoolean(MovieDetailsFragment.ARG_KEY_ANIMATE_RATING, false);
-            MovieDetailsFragment fragment = new MovieDetailsFragment();
-            fragment.setArguments(bundle);
+            MovieDetailsFragment fragment = MovieDetailsFragment.createFragment(
+                    movie.getId(), movie, false, false);
             return fragment;
         }
 
