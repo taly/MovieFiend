@@ -17,6 +17,7 @@ public class MovieDetailsFragment extends Fragment {
 
     public static final String ARG_KEY_MOVIE = "CurrentMovie";
     public static final String ARG_KEY_ANIMATE_RATING = "AnimateRating";
+    public static final String FRAGMENT_FLAG = "MovieDetails";
 
     private MovieDetailsHolder mMovieDetailsHolder;
 

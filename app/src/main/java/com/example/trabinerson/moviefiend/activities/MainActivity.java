@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements InTheatresFragmen
                 .setCustomAnimations(
                         android.R.anim.slide_in_left,
                         android.R.anim.fade_out)
-                .replace(R.id.fragment_container, fragment).commit();
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(MovieDetailsFragment.FRAGMENT_FLAG)
+                .commit();
     }
 }
