@@ -4,6 +4,7 @@ import android.support.v4.app.LoaderManager;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.support.v4.content.Loader;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ public class DeeplinkDetailsActivity
         Intent intent = getIntent();
         String data = intent.getDataString();
 
-        String movieId = data.substring(data.lastIndexOf("/") + 1);
+        String movieId = Uri.parse(data).getLastPathSegment();
         mMovieId = Integer.parseInt(movieId);
 
         // Get movie
@@ -47,6 +48,8 @@ public class DeeplinkDetailsActivity
 
         if (data == null || data.length == 0) {
             Toast.makeText(this, "No movie found with ID " + mMovieId, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         }
         else {
             Movie movie = data[0]; // SingleMovieLoader returns 1 movie
