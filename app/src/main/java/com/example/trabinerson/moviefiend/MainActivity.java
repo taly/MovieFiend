@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mFragmentManager = getSupportFragmentManager();
+
         // Set fragment (if necessary)
         if (findViewById(R.id.fragment_container) != null) {
 
@@ -54,7 +56,6 @@ public class MainActivity extends AppCompatActivity
                 fragment = new InTheatresFragment();
             }
 
-            mFragmentManager = getSupportFragmentManager();
             mFragmentManager.beginTransaction()
                     .add(R.id.fragment_container, fragment).commit();
         }
