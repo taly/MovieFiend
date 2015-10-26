@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
 
             <intent-filter>
@@ -28,29 +28,6 @@
                     android:scheme="moviefiend"
                     android:host="movie-details"/>
             </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".activities.DetailsActivity"
-            android:label="@string/details_app_name"
-            android:parentActivityName=".activities.MainActivity">
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
-        </activity>
-
-        <activity
-            android:name=".activities.SimilarMoviesPagerActivity"
-            android:parentActivityName=".activities.DetailsActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.DetailsActivity" />
-        </activity>
-
-        <activity android:name=".activities.DeeplinkDetailsActivity"
-            android:label="@string/details_app_name">
-
         </activity>
 
     </application>

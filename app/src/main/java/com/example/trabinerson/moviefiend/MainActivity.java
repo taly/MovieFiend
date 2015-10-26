@@ -1,4 +1,4 @@
-package com.example.trabinerson.moviefiend.activities;
+package com.example.trabinerson.moviefiend;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.trabinerson.moviefiend.Movie;
-import com.example.trabinerson.moviefiend.R;
 import com.example.trabinerson.moviefiend.fragments.InTheatresFragment;
 import com.example.trabinerson.moviefiend.fragments.MovieDetailsFragment;
 import com.example.trabinerson.moviefiend.fragments.SimilarMoviesPagerFragment;
