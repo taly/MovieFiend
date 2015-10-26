@@ -15,6 +15,7 @@ import com.example.trabinerson.moviefiend.Movie;
 import com.example.trabinerson.moviefiend.MovieDetailsHolder;
 import com.example.trabinerson.moviefiend.R;
 import com.example.trabinerson.moviefiend.loaders.SimilarMoviesLoader;
+import com.example.trabinerson.moviefiend.loaders.SingleMovieLoader;
 
 /**
  * A fragment that contains a movie.
@@ -26,6 +27,7 @@ public class MovieDetailsFragment extends Fragment
         void onSimilarMoviesClicked(Movie[] similarMovies);
     }
 
+    public static final String ARG_KEY_MOVIE_ID = "MovieId";
     public static final String ARG_KEY_MOVIE = "CurrentMovie";
     public static final String ARG_KEY_SHOW_SIMILAR = "ShowSimilarMovies";
     public static final String ARG_KEY_ANIMATE_RATING = "AnimateRating";
@@ -33,12 +35,15 @@ public class MovieDetailsFragment extends Fragment
 
     private static final String LOG_TAG = MovieDetailsFragment.class.getSimpleName();
     private static final String INSTANCE_KEY_ANIMATE_RATING = "AnimateRating";
-    private static final int LOADER_ID = 1;
+    private static final int SINGLE_MOVIE_LOADER_ID = 1;
+    private static final int SIMILAR_MOVIES_LOADER_ID = 2;
 
     private int mMovieId;
     private Movie[] mSimilarMovies;
     private MovieDetailsHolder mMovieDetailsHolder;
     private MovieDetailsCallbacks mCallback;
+    private boolean mAnimateRating;
+    private boolean mShowSimilar;
 
     @Override
     public void onAttach(Context context) {
@@ -57,31 +62,27 @@ public class MovieDetailsFragment extends Fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.movie_details, container, false);
 
-        // Get movie
+        // Get general args
         Bundle args = getArguments();
-        Movie movie = args.getParcelable(ARG_KEY_MOVIE);
-        mMovieId = movie.getId();
-        Log.i(LOG_TAG, "Unbundled " + movie.getName());
-
-        // Get other args
-        boolean animate = args.getBoolean(ARG_KEY_ANIMATE_RATING, true);
-        if (animate && savedInstanceState != null) {
-            animate = savedInstanceState.getBoolean(INSTANCE_KEY_ANIMATE_RATING, true);
+        mAnimateRating = args.getBoolean(ARG_KEY_ANIMATE_RATING, true);
+        if (mAnimateRating && savedInstanceState != null) {
+            mAnimateRating = savedInstanceState.getBoolean(INSTANCE_KEY_ANIMATE_RATING, true);
         }
-        boolean showSimilar = args.getBoolean(ARG_KEY_SHOW_SIMILAR, true);
+        mShowSimilar = args.getBoolean(ARG_KEY_SHOW_SIMILAR, true);
 
         // Init similar movies button
         initSimilarMovies(rootView);
-
-        // Set movie and load similar (if necessary)
         mMovieDetailsHolder = new MovieDetailsHolder(rootView);
-        if (showSimilar) {
-            // Init loader
-            getLoaderManager().initLoader(LOADER_ID, null, this);
+
+        // Get (or load) movie
+        mMovieId = args.getInt(ARG_KEY_MOVIE_ID);
+        Movie movie = args.getParcelable(ARG_KEY_MOVIE);
+        if (movie == null) {
+            getLoaderManager().initLoader(SINGLE_MOVIE_LOADER_ID, null, this);
         } else {
-            mMovieDetailsHolder.disableSimilarMovies();
+            setMovie(movie);
+            Log.i(LOG_TAG, "Unbundled " + movie.getName());
         }
-        mMovieDetailsHolder.setMovie(movie, animate);
 
         return rootView;
     }
@@ -94,18 +95,39 @@ public class MovieDetailsFragment extends Fragment
 
     @Override
     public Loader<Movie[]> onCreateLoader(int id, Bundle args) {
-        return new SimilarMoviesLoader(getActivity(), mMovieId);
+        if (id == SINGLE_MOVIE_LOADER_ID) {
+            return new SingleMovieLoader(getActivity(), mMovieId);
+        } else {
+            return new SimilarMoviesLoader(getActivity(), mMovieId);
+        }
     }
 
     @Override
     public void onLoadFinished(Loader<Movie[]> loader, Movie[] data) {
-        Log.i(LOG_TAG, "Got " + data.length + " similar movies");
-        mSimilarMovies = data;
-        mMovieDetailsHolder.finishLoading();
+        int id = loader.getId();
+        if (id == SINGLE_MOVIE_LOADER_ID) {
+            Movie movie = data[0]; // Returns only 1 movie
+            setMovie(movie);
+        } else {
+            Log.i(LOG_TAG, "Got " + data.length + " similar movies");
+            mSimilarMovies = data;
+            if (mShowSimilar) {
+                mMovieDetailsHolder.finishLoading();
+            }
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<Movie[]> loader) { }
+
+    private void setMovie(Movie movie) {
+        if (mShowSimilar) {
+            getLoaderManager().initLoader(SIMILAR_MOVIES_LOADER_ID, null, this);
+        } else {
+            mMovieDetailsHolder.disableSimilarMovies();
+        }
+        mMovieDetailsHolder.setMovie(movie, mAnimateRating);
+    }
 
     private void initSimilarMovies(View rootView) {
         TextView similarMoviesView = (TextView) rootView.findViewById(R.id.textview_similar_movies);

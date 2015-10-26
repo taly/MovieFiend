@@ -26,6 +26,9 @@ public class MovieDetailsHolder {
         mDescriptionView = (TextView) rootView.findViewById(R.id.textview_movie_description);
         mSimilarMoviesText = (TextView) rootView.findViewById(R.id.textview_similar_movies);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_similar_movies);
+
+        // Init rating bubble
+        mRatingBubble.setRating(0, false);
     }
 
     public void setMovie(Movie movie, boolean animate) {

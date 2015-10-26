@@ -1,5 +1,7 @@
 package com.example.trabinerson.moviefiend.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,11 +32,35 @@ public class MainActivity extends AppCompatActivity
                 return;
             }
 
-            Fragment listFragment = new InTheatresFragment();
+            Fragment fragment;
+            Intent intent = getIntent();
+            String data = intent.getDataString();
+
+            if (data != null) { // Started from deep link
+
+                // Get movie ID
+                String movieIdStr = Uri.parse(data).getLastPathSegment();
+                int movieId = Integer.parseInt(movieIdStr);
+
+                // Create bundle
+                Bundle bundle = new Bundle();
+                bundle.putInt(MovieDetailsFragment.ARG_KEY_MOVIE_ID, movieId);
+                bundle.putBoolean(MovieDetailsFragment.ARG_KEY_SHOW_SIMILAR, true);
+                bundle.putBoolean(MovieDetailsFragment.ARG_KEY_ANIMATE_RATING, true);
+
+                // Create fragment
+                fragment = new MovieDetailsFragment();
+                fragment.setArguments(bundle);
+
+            } else {
+                fragment = new InTheatresFragment();
+            }
+
             mFragmentManager = getSupportFragmentManager();
             mFragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, listFragment, "").commit();
+                    .add(R.id.fragment_container, fragment).commit();
         }
+
     }
 
     @Override
@@ -42,6 +68,7 @@ public class MainActivity extends AppCompatActivity
 
         // Create bundle
         Bundle bundle = new Bundle();
+        bundle.putInt(MovieDetailsFragment.ARG_KEY_MOVIE_ID, movie.getId());
         bundle.putParcelable(MovieDetailsFragment.ARG_KEY_MOVIE, movie);
         bundle.putBoolean(MovieDetailsFragment.ARG_KEY_ANIMATE_RATING, true);
         bundle.putBoolean(MovieDetailsFragment.ARG_KEY_SHOW_SIMILAR, true);
