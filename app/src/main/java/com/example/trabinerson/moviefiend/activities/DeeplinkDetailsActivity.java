@@ -48,6 +48,8 @@ public class DeeplinkDetailsActivity
 
         if (data == null || data.length == 0) {
             Toast.makeText(this, "No movie found with ID " + mMovieId, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         }
         else {
             Movie movie = data[0]; // SingleMovieLoader returns 1 movie
