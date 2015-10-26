@@ -27,7 +27,7 @@ public class MovieDetailsHolder {
         mSimilarMoviesText = (TextView) rootView.findViewById(R.id.textview_similar_movies);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_similar_movies);
 
-        // Init rating bubble
+        // Initial values for rating bubble
         mRatingBubble.setRating(0, false);
     }
 

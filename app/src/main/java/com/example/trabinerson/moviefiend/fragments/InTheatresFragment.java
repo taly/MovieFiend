@@ -57,8 +57,8 @@ public class InTheatresFragment extends Fragment
         mMoviesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Movie movie = mListAdapter.getMovieAtPosition(position);
-            mCallback.onMovieClicked(movie);
+                Movie movie = mListAdapter.getMovieAtPosition(position);
+                mCallback.onMovieClicked(movie);
             }
         });
 

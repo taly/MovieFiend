@@ -88,7 +88,7 @@ public class MovieDetailsFragment extends Fragment
         }
         mShowSimilar = args.getBoolean(ARG_KEY_SHOW_SIMILAR, true);
 
-        // Init similar movies button
+        // Initializations
         initSimilarMovies(rootView);
         mMovieDetailsHolder = new MovieDetailsHolder(rootView);
 
