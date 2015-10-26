@@ -1,5 +1,6 @@
 package com.example.trabinerson.moviefiend.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -18,12 +19,29 @@ import com.example.trabinerson.moviefiend.loaders.InTheatresMoviesLoader;
 /**
  * Fragment that contains the list of movies currently in theatres.
  */
-public class InTheatresFragment extends Fragment implements LoaderManager.LoaderCallbacks<Movie[]>{
+public class InTheatresFragment extends Fragment
+        implements LoaderManager.LoaderCallbacks<Movie[]> {
+
+    public interface Callback {
+        void onMovieClicked(Movie movie);
+    }
 
     private static final int LOADER_ID = 1;
 
+    private Callback mCallback;
     private ListView mMoviesList;
     private InTheatresAdapter mListAdapter;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mCallback = (Callback) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnMovieClickedListener");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,29 +50,15 @@ public class InTheatresFragment extends Fragment implements LoaderManager.Loader
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.in_theatres_list, container, false);
 
-        // Prepare list
+        // Set list adapter
         mMoviesList = (ListView) rootView.findViewById(R.id.listview_in_theatres);
+
+        // Set callback
         mMoviesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                // TODO this should all be defined in MainActivity
-                Movie movie = mListAdapter.getMovieAtPosition(position);
-
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(MovieDetailsFragment.ARG_KEY_MOVIE, movie);
-                bundle.putBoolean(MovieDetailsFragment.ARG_KEY_ANIMATE_RATING, true);
-
-                MovieDetailsFragment fragment = new MovieDetailsFragment();
-                fragment.setArguments(bundle);
-
-//                FragmentManager fragmentManager = getFragmentManager();
-//                fragmentManager.beginTransaction().add(fragment, "").commit();
-//                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
-//                intent.putExtras(bundle);
-
-
-//                startActivity(intent);
+            Movie movie = mListAdapter.getMovieAtPosition(position);
+            mCallback.onMovieClicked(movie);
             }
         });
 
@@ -76,7 +80,6 @@ public class InTheatresFragment extends Fragment implements LoaderManager.Loader
     }
 
     @Override
-    public void onLoaderReset(Loader loader) {
-        // TODO (?)
-    }
+    public void onLoaderReset(Loader loader) { }
+
 }
