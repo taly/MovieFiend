@@ -123,6 +123,8 @@ public class SimilarMoviesPagerActivity extends FragmentActivity {
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
             bundle.putParcelable(MovieDetailsFragment.ARG_KEY_MOVIE, mSimilarMovies[position]);
+            bundle.putBoolean(MovieDetailsFragment.ARG_KEY_ANIMATE_RATING, false);
+            bundle.putBoolean(MovieDetailsFragment.ARG_KEY_SHOW_SIMILAR, false);
             MovieDetailsFragment fragment = new MovieDetailsFragment();
             fragment.setArguments(bundle);
             return fragment;

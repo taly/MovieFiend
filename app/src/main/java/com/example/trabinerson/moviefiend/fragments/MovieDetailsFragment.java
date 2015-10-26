@@ -73,15 +73,15 @@ public class MovieDetailsFragment extends Fragment
         // Init similar movies button
         initSimilarMovies(rootView);
 
-        // Set movie
+        // Set movie and load similar (if necessary)
         mMovieDetailsHolder = new MovieDetailsHolder(rootView);
-        if (!showSimilar) {
+        if (showSimilar) {
+            // Init loader
+            getLoaderManager().initLoader(LOADER_ID, null, this);
+        } else {
             mMovieDetailsHolder.disableSimilarMovies();
         }
         mMovieDetailsHolder.setMovie(movie, animate);
-
-        // Init loader
-        getLoaderManager().initLoader(LOADER_ID, null, this);
 
         return rootView;
     }

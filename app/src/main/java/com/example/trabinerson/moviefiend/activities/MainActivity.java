@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
         bundle.putParcelable(MovieDetailsFragment.ARG_KEY_MOVIE, movie);
         bundle.putBoolean(MovieDetailsFragment.ARG_KEY_ANIMATE_RATING, true);
+        bundle.putBoolean(MovieDetailsFragment.ARG_KEY_SHOW_SIMILAR, true);
 
         // Create fragment
         MovieDetailsFragment fragment = new MovieDetailsFragment();
