@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.trabinerson.moviefiend.fragments.InTheatresFragment;
@@ -16,14 +15,10 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity
         implements InTheatresFragment.InTheatresCallbacks, MovieDetailsFragment.MovieDetailsCallbacks {
 
-    private FragmentManager mFragmentManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mFragmentManager = getSupportFragmentManager();
 
         // Set fragment (if necessary)
         if (findViewById(R.id.fragment_container) != null) {
@@ -44,7 +39,7 @@ public class MainActivity extends AppCompatActivity
                 fragment = new InTheatresFragment();
             }
 
-            mFragmentManager.beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, fragment).commit();
         }
 
@@ -75,10 +70,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void startFragment(Fragment fragment, String fragmentFlag) {
-        mFragmentManager.beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(
                         android.R.anim.slide_in_left,
-                        android.R.anim.fade_out)
+                        android.R.anim.fade_out,
+                        android.R.anim.fade_in,
+                        android.R.anim.slide_out_right)
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(fragmentFlag)
                 .commit();
