@@ -39,6 +39,12 @@ public class InTheatresFragment extends Fragment
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getLoaderManager().initLoader(LOADER_ID, null, this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Preliminary
@@ -55,9 +61,6 @@ public class InTheatresFragment extends Fragment
                 mCallback.onMovieClicked(movie);
             }
         });
-
-        // Init loader
-        getLoaderManager().initLoader(LOADER_ID, null, this);
 
         return rootView;
     }

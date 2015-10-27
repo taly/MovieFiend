@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.fragment_container, fragment).commit();
     }
 
+
     @Override
     public void onMovieClicked(Movie movie) {
         MovieDetailsFragment fragment = MovieDetailsFragment.createFragment(
