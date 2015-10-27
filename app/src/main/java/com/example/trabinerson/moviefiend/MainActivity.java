@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, fragment).commit();
+                .replace(R.id.fragment_container, fragment).commit();
     }
 
     @Override
