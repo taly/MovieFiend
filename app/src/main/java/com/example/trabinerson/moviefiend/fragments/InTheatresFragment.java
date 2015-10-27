@@ -41,11 +41,10 @@ public class InTheatresFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Get root view
+        // Preliminary
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.in_theatres_list, container, false);
-
-        // Set list adapter
+        mListAdapter = new InTheatresAdapter(getActivity());
         mMoviesList = (ListView) rootView.findViewById(R.id.listview_in_theatres);
 
         // Set callback
@@ -70,7 +69,7 @@ public class InTheatresFragment extends Fragment
 
     @Override
     public void onLoadFinished(Loader loader, Movie[] data) {
-        mListAdapter = new InTheatresAdapter(getActivity(), data);
+        mListAdapter.setData(data);
         mMoviesList.setAdapter(mListAdapter);
     }
 
