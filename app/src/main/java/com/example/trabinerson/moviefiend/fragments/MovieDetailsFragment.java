@@ -23,7 +23,7 @@ import com.example.trabinerson.moviefiend.loaders.SingleMovieLoader;
 public class MovieDetailsFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Movie[]> {
 
-    public interface MovieDetailsCallbacks {
+    public interface Callbacks {
         void onSimilarMoviesClicked(Movie[] similarMovies);
     }
 
@@ -41,7 +41,7 @@ public class MovieDetailsFragment extends Fragment
     private int mMovieId;
     private Movie[] mSimilarMovies;
     private MovieDetailsHolder mMovieDetailsHolder;
-    private MovieDetailsCallbacks mCallback;
+    private Callbacks mCallback;
     private boolean mAnimateRating;
     private boolean mShowSimilar;
 
@@ -66,7 +66,7 @@ public class MovieDetailsFragment extends Fragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mCallback = (MovieDetailsCallbacks) context;
+        mCallback = (Callbacks) context;
     }
 
     @Override

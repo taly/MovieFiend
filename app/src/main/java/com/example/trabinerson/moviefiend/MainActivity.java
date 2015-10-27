@@ -13,7 +13,7 @@ import com.example.trabinerson.moviefiend.fragments.SimilarMoviesPagerFragment;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity
-        implements InTheatresFragment.InTheatresCallbacks, MovieDetailsFragment.MovieDetailsCallbacks {
+        implements InTheatresFragment.Callbacks, MovieDetailsFragment.Callbacks {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
