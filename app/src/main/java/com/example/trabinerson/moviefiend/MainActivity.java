@@ -26,10 +26,10 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment;
         Intent intent = getIntent();
-        String data = intent.getDataString();
+        Uri data = intent.getData();
 
         if (data != null) { // Started from deep link - show movie details fragment
-            String movieIdStr = Uri.parse(data).getLastPathSegment();
+            String movieIdStr = data.getLastPathSegment();
             int movieId = Integer.parseInt(movieIdStr);
             fragment = MovieDetailsFragment.createFragment(movieId, null, true, true);
         } else { // Started normally - show list
