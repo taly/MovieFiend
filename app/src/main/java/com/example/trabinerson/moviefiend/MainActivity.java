@@ -20,29 +20,24 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Set fragment (if necessary)
-        if (findViewById(R.id.fragment_container) != null) {
-
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            Fragment fragment;
-            Intent intent = getIntent();
-            String data = intent.getDataString();
-
-            if (data != null) { // Started from deep link - show movie details fragment
-                String movieIdStr = Uri.parse(data).getLastPathSegment();
-                int movieId = Integer.parseInt(movieIdStr);
-                fragment = MovieDetailsFragment.createFragment(movieId, null, true, true);
-            } else { // Started normally - show list
-                fragment = new InTheatresFragment();
-            }
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, fragment).commit();
+        if (savedInstanceState != null) {
+            return;
         }
 
+        Fragment fragment;
+        Intent intent = getIntent();
+        String data = intent.getDataString();
+
+        if (data != null) { // Started from deep link - show movie details fragment
+            String movieIdStr = Uri.parse(data).getLastPathSegment();
+            int movieId = Integer.parseInt(movieIdStr);
+            fragment = MovieDetailsFragment.createFragment(movieId, null, true, true);
+        } else { // Started normally - show list
+            fragment = new InTheatresFragment();
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, fragment).commit();
     }
 
     @Override
