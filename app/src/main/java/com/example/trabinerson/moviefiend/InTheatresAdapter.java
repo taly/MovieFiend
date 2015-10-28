@@ -19,10 +19,9 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
     private Context mContext;
     private Movie mData[] = null;
 
-    public InTheatresAdapter(Context context,  Movie[] data) {
-        super(context, R.layout.list_item_in_theatres, data);
+    public InTheatresAdapter(Context context) {
+        super(context, R.layout.list_item_in_theatres);
         this.mContext = context;
-        this.mData = data;
     }
 
     @Override
@@ -32,7 +31,7 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
 
         // Initialize row if necessary
         if (row == null) {
-            LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
+            LayoutInflater inflater = ((Activity)this.mContext).getLayoutInflater();
             row = inflater.inflate(R.layout.list_item_in_theatres, parent, false);
             holder = new MovieHolder(row);
             row.setTag(holder);
@@ -46,6 +45,11 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
         holder.setMovie(this.mContext, movie);
 
         return row;
+    }
+
+    public void setData(Movie[] data) {
+        mData = data;
+        addAll(data);
     }
 
     public Movie getMovieAtPosition(int position) {
