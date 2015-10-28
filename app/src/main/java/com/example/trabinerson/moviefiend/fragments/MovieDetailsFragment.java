@@ -15,7 +15,6 @@ import com.example.trabinerson.moviefiend.Movie;
 import com.example.trabinerson.moviefiend.MovieDetailsHolder;
 import com.example.trabinerson.moviefiend.R;
 import com.example.trabinerson.moviefiend.loaders.SimilarMoviesLoader;
-import com.example.trabinerson.moviefiend.loaders.SingleMovieLoader;
 
 /**
  * A fragment that contains a movie.
@@ -27,16 +26,14 @@ public class MovieDetailsFragment extends Fragment
         void onSimilarMoviesClicked(Movie[] similarMovies);
     }
 
-    public static final String ARG_KEY_MOVIE_ID = "MovieId";
-    public static final String ARG_KEY_MOVIE = "CurrentMovie";
-    public static final String ARG_KEY_SHOW_SIMILAR = "ShowSimilarMovies";
-    public static final String ARG_KEY_ANIMATE_RATING = "AnimateRating";
     public static final String FRAGMENT_FLAG = "MovieDetails";
 
     private static final String LOG_TAG = MovieDetailsFragment.class.getSimpleName();
     private static final String INSTANCE_KEY_ANIMATE_RATING = "AnimateRating";
-    private static final int SINGLE_MOVIE_LOADER_ID = 1;
-    private static final int SIMILAR_MOVIES_LOADER_ID = 2;
+    private static final String ARG_KEY_MOVIE = "CurrentMovie";
+    private static final String ARG_KEY_SHOW_SIMILAR = "ShowSimilarMovies";
+    private static final String ARG_KEY_ANIMATE_RATING = "AnimateRating";
+    private static final int LOADER_ID = 1;
 
     private int mMovieId;
     private Movie[] mSimilarMovies;
@@ -46,14 +43,11 @@ public class MovieDetailsFragment extends Fragment
     private boolean mShowSimilar;
 
     public static MovieDetailsFragment createFragment(
-            int movieId, Movie movie, boolean animateRating, boolean showSimilarMovies) {
+            Movie movie, boolean animateRating, boolean showSimilarMovies) {
 
         // Create bundle
         Bundle bundle = new Bundle();
-        bundle.putInt(ARG_KEY_MOVIE_ID, movieId);
-        if (movie != null) {
-            bundle.putParcelable(ARG_KEY_MOVIE, movie);
-        }
+        bundle.putParcelable(ARG_KEY_MOVIE, movie);
         bundle.putBoolean(ARG_KEY_ANIMATE_RATING, animateRating);
         bundle.putBoolean(ARG_KEY_SHOW_SIMILAR, showSimilarMovies);
 
@@ -61,6 +55,14 @@ public class MovieDetailsFragment extends Fragment
         MovieDetailsFragment fragment = new MovieDetailsFragment();
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (mShowSimilar) {
+            getLoaderManager().initLoader(LOADER_ID, null, this);
+        }
     }
 
     @Override
@@ -87,15 +89,11 @@ public class MovieDetailsFragment extends Fragment
         initSimilarMovies(rootView);
         mMovieDetailsHolder = new MovieDetailsHolder(rootView);
 
-        // Get (or load) movie
-        mMovieId = args.getInt(ARG_KEY_MOVIE_ID);
+        // Get movie
         Movie movie = args.getParcelable(ARG_KEY_MOVIE);
-        if (movie == null) {
-            getLoaderManager().initLoader(SINGLE_MOVIE_LOADER_ID, null, this);
-        } else {
-            setMovie(movie);
-            Log.i(LOG_TAG, "Unbundled " + movie.getName());
-        }
+        mMovieId = movie.getId();
+        setMovie(movie);
+        Log.i(LOG_TAG, "Unbundled " + movie.getName());
 
         return rootView;
     }
@@ -108,25 +106,15 @@ public class MovieDetailsFragment extends Fragment
 
     @Override
     public Loader<Movie[]> onCreateLoader(int id, Bundle args) {
-        if (id == SINGLE_MOVIE_LOADER_ID) {
-            return new SingleMovieLoader(getActivity(), mMovieId);
-        } else {
-            return new SimilarMoviesLoader(getActivity(), mMovieId);
-        }
+        return new SimilarMoviesLoader(getActivity(), mMovieId);
     }
 
     @Override
     public void onLoadFinished(Loader<Movie[]> loader, Movie[] data) {
-        int id = loader.getId();
-        if (id == SINGLE_MOVIE_LOADER_ID) {
-            Movie movie = data[0]; // Returns only 1 movie
-            setMovie(movie);
-        } else {
-            Log.i(LOG_TAG, "Got " + data.length + " similar movies");
-            mSimilarMovies = data;
-            if (mShowSimilar) {
-                mMovieDetailsHolder.finishLoading();
-            }
+        Log.i(LOG_TAG, "Got " + data.length + " similar movies");
+        mSimilarMovies = data;
+        if (mShowSimilar) {
+            mMovieDetailsHolder.finishLoading();
         }
     }
 
@@ -134,9 +122,7 @@ public class MovieDetailsFragment extends Fragment
     public void onLoaderReset(Loader<Movie[]> loader) { }
 
     private void setMovie(Movie movie) {
-        if (mShowSimilar) {
-            getLoaderManager().initLoader(SIMILAR_MOVIES_LOADER_ID, null, this);
-        } else {
+        if (!mShowSimilar) {
             mMovieDetailsHolder.disableSimilarMovies();
         }
         mMovieDetailsHolder.setMovie(movie, mAnimateRating);

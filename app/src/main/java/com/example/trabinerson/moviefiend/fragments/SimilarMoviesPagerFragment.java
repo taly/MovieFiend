@@ -127,8 +127,7 @@ public class SimilarMoviesPagerFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
             Movie movie = mSimilarMovies[position];
-            MovieDetailsFragment fragment = MovieDetailsFragment.createFragment(
-                    movie.getId(), movie, false, false);
+            MovieDetailsFragment fragment = MovieDetailsFragment.createFragment(movie, false, false);
             return fragment;
         }
 

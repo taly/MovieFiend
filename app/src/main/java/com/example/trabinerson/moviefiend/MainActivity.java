@@ -1,7 +1,6 @@
 package com.example.trabinerson.moviefiend;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +14,8 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity
         implements InTheatresFragment.Callbacks, MovieDetailsFragment.Callbacks {
 
+    public static final String INTENT_ARG_MOVIE = "Movie";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,27 +25,21 @@ public class MainActivity extends AppCompatActivity
             return;
         }
 
-        Fragment fragment;
+        // Prepare movies list on the stack in any case (even if started from deep link)
+        showInTheatresList();
+
         Intent intent = getIntent();
-        Uri data = intent.getData();
+        Bundle extras = intent.getExtras();
 
-        if (data != null) { // Started from deep link - show movie details fragment
-            String movieIdStr = data.getLastPathSegment();
-            int movieId = Integer.parseInt(movieIdStr);
-            fragment = MovieDetailsFragment.createFragment(movieId, null, true, true);
-        } else { // Started normally - show list
-            fragment = new InTheatresFragment();
+        if (extras != null) { // Started from deep link - show movie details fragment
+            Movie movie = extras.getParcelable(INTENT_ARG_MOVIE);
+            showMovie(movie);
         }
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment).commit();
     }
-
 
     @Override
     public void onMovieClicked(Movie movie) {
-        MovieDetailsFragment fragment = MovieDetailsFragment.createFragment(
-                movie.getId(), movie, true, true);
+        MovieDetailsFragment fragment = MovieDetailsFragment.createFragment(movie, true, true);
         startFragment(fragment, MovieDetailsFragment.FRAGMENT_FLAG);
     }
 
@@ -65,6 +60,17 @@ public class MainActivity extends AppCompatActivity
         startFragment(fragment, SimilarMoviesPagerFragment.FRAGMENT_FLAG);
     }
 
+    private void showInTheatresList() {
+        InTheatresFragment fragment = new InTheatresFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+    }
+
+    private void showMovie(Movie movie) {
+        onMovieClicked(movie); // Behave as if movie was clicked
+    }
+
     private void startFragment(Fragment fragment, String fragmentFlag) {
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(
@@ -72,8 +78,8 @@ public class MainActivity extends AppCompatActivity
                         android.R.anim.fade_out,
                         android.R.anim.fade_in,
                         android.R.anim.slide_out_right)
-                .replace(R.id.fragment_container, fragment)
-                .addToBackStack(fragmentFlag)
+                .replace(R.id.fragment_container, fragment, fragmentFlag)
+                .addToBackStack("")
                 .commit();
     }
 }
