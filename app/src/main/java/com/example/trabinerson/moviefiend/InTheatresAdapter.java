@@ -67,7 +67,7 @@ public class InTheatresAdapter extends ArrayAdapter<Movie> {
         public void setMovie(Context context, Movie movie) {
             ImageLoader imageLoader = RequestQueueSingleton.getInstance().getImageLoader();
             mNameView.setText(movie.getName());
-            String rating = context.getString(R.string.rating, movie.getRating());
+            String rating = context.getString(R.string.rating_format, movie.getRating());
             mRatingView.setText(rating);
             mPosterView.setImageUrl(movie.getPosterUrl(), imageLoader);
         }

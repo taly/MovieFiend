@@ -1,4 +1,4 @@
-package com.example.trabinerson.moviefiend;
+package com.example.trabinerson.moviefiend.activities;
 
 import android.app.LoaderManager;
 import android.content.Intent;
@@ -8,6 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.example.trabinerson.moviefiend.InTheatresAdapter;
+import com.example.trabinerson.moviefiend.Movie;
+import com.example.trabinerson.moviefiend.R;
+import com.example.trabinerson.moviefiend.loaders.InTheatresMoviesLoader;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Movie[]> {
 
@@ -44,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
-        return new MoviesLoader(this);
+        return new InTheatresMoviesLoader(this);
     }
 
     @Override

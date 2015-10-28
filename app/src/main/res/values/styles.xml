@@ -5,4 +5,19 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="ProgressDot">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">10dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:src">@drawable/dot</item>
+    </style>
+
+    <style name="RatingBubble">
+        <item name="android:layout_width">35dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="colorLow">@color/rating_red</item>
+        <item name="colorMedium">@color/rating_yellow</item>
+        <item name="colorHigh">@color/rating_green</item>
+    </style>
+
 </resources>
