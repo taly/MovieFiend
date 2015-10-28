@@ -1,4 +1,4 @@
-package com.example.trabinerson.moviefiend;
+package com.example.trabinerson.moviefiend.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.ImageView;
+
+import com.example.trabinerson.moviefiend.Movie;
+import com.example.trabinerson.moviefiend.MovieDetailsFragment;
+import com.example.trabinerson.moviefiend.R;
 
 /**
  * An activity that shows a slider between similar movies.

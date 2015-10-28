@@ -1,9 +1,10 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Movie Fiend</string>
-    <string name="deatils_app_name">Movie Details</string>
+    <string name="details_app_name">Movie Details</string>
 
     <string name="action_settings">Settings</string>
     <string name="rating_format">Rating: <xliff:g id="rating">%.1f</xliff:g></string>
     <string name="rating_standalone">Rating:</string>
     <string name="similar_movies">Similar Movies</string>
+    <string name="movie_loading">Your movie is coming soon...</string>
 </resources>
