@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="link_blue">#0099ff</color>
+    <color name="header_grey">#cccccc</color>
+    <color name="rating_red">#ff6666</color>
+    <color name="rating_yellow">#ffcc66</color>
+    <color name="rating_green">#00ff99</color>
+</resources>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/details_root"
+        android:layout_margin="20dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                tools:text="The Martian"
+                android:id="@+id/textview_movie_name"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/rating_standalone"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/textview_movie_rating" />
+                <com.example.trabinerson.moviefiend.RatingBubbleView
+                    android:id="@+id/rating_bubble"
+                    style="@style/RatingBubble"/>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ProgressBar
+                    android:id="@+id/progress_bar_similar_movies"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/link_blue"
+                    android:textSize="16sp"
+                    android:text="@string/similar_movies"
+                    android:id="@+id/textview_similar_movies"
+                    android:layout_marginTop="10dp"
+                    android:clickable="true"
+                    android:visibility="invisible"
+                    android:onClick="onSimilarMoviesClicked"/>
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="During a manned mission to Mars, Astronaut Mark Watney is presumed dead after a fierce storm and left behind by his crew. But Watney has survived and finds himself stranded and alone on the hostile planet. With only meager supplies, he must draw upon his ingenuity, wit and spirit to subsist and find a way to signal to Earth that he is alive."
+                android:id="@+id/textview_movie_description"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:paddingTop="10dp"/>
+
+        </LinearLayout>
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/imageview_details_poster"
+            android:scaleType="fitCenter"/>
+
+    </LinearLayout>
+
+</ScrollView>
