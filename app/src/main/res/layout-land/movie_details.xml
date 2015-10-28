@@ -24,12 +24,23 @@
                 tools:text="The Martian"
                 android:id="@+id/textview_movie_name"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                tools:text="Rating: 7.7"
-                android:id="@+id/textview_movie_rating"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/rating_standalone"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/textview_movie_rating" />
+                <com.example.trabinerson.moviefiend.RatingBubbleView
+                    android:id="@+id/rating_bubble"
+                    style="@style/RatingBubble"/>
+            </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"

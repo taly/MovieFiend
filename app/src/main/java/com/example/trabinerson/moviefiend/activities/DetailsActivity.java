@@ -1,4 +1,4 @@
-package com.example.trabinerson.moviefiend;
+package com.example.trabinerson.moviefiend.activities;
 
 import android.app.LoaderManager;
 import android.content.Intent;
@@ -8,17 +8,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.example.trabinerson.moviefiend.Movie;
+import com.example.trabinerson.moviefiend.MovieDetailsHolder;
+import com.example.trabinerson.moviefiend.R;
+import com.example.trabinerson.moviefiend.loaders.SimilarMoviesLoader;
+
 import java.util.Arrays;
 
 /**
  * The activity that shows movie details.
  */
-public class DetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Movie[]> {
+public class DetailsActivity
+        extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Movie[]> {
 
     public static final String INTENT_KEY_MOVIE = "Movie";
     private static final int LOADER_ID = 1;
 
     private static final String LOG_TAG = DetailsActivity.class.getSimpleName();
+    private static final String INSTANCE_KEY_ANIMATE_RATING = "AnimateRating";
 
     private int mMovieId;
     private Movie[] mSimilarMovies;
@@ -36,12 +43,22 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         Log.i(LOG_TAG, "Unbundled " + movie.getName());
 
         // Set movie on screen
+        boolean animate = true;
+        if (savedInstanceState != null) {
+            animate = savedInstanceState.getBoolean(INSTANCE_KEY_ANIMATE_RATING, true);
+        }
         View rootView = findViewById(R.id.details_root);
         mMovieDetailsHolder = new MovieDetailsHolder(rootView);
-        mMovieDetailsHolder.setMovie(this, movie);
+        mMovieDetailsHolder.setMovie(movie, animate);
 
         // Init loader
         getLoaderManager().initLoader(LOADER_ID, null, this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(INSTANCE_KEY_ANIMATE_RATING, false);
     }
 
     public void onSimilarMoviesClicked(View view) {
