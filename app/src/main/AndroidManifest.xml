@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DeeplinkDetailsActivity"
+        <activity android:name=".activities.DeeplinkDetailsActivity"
             android:label="@string/details_app_name">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

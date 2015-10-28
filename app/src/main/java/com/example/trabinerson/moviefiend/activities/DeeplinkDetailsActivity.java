@@ -1,4 +1,4 @@
-package com.example.trabinerson.moviefiend;
+package com.example.trabinerson.moviefiend.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +8,8 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.example.trabinerson.moviefiend.Movie;
+import com.example.trabinerson.moviefiend.R;
 import com.example.trabinerson.moviefiend.loaders.SingleMovieLoader;
 
 /**
