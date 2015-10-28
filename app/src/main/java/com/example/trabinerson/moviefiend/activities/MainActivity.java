@@ -76,10 +76,10 @@ public class MainActivity extends AppCompatActivity
     private void startFragment(Fragment fragment, String fragmentFlag) {
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(
-                        android.R.anim.slide_in_left,
-                        android.R.anim.fade_out,
-                        android.R.anim.fade_in,
-                        android.R.anim.slide_out_right)
+                        R.anim.slide_from_left,
+                        R.anim.slide_to_right,
+                        R.anim.slide_from_right,
+                        R.anim.slide_to_left)
                 .replace(R.id.fragment_container, fragment, fragmentFlag)
                 .addToBackStack("")
                 .commit();
