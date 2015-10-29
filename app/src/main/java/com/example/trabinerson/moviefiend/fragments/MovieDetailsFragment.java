@@ -102,6 +102,8 @@ public class MovieDetailsFragment extends Fragment
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
+        // Don't animate rating on screen rotate
         outState.putBoolean(INSTANCE_KEY_ANIMATE_RATING, false);
     }
 
