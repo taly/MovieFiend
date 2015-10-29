@@ -36,7 +36,7 @@
                     android:text="@string/rating_standalone"
                     android:layout_marginRight="5dp"
                     android:id="@+id/textview_movie_rating" />
-                <com.example.trabinerson.moviefiend.RatingBubbleView
+                <com.example.trabinerson.moviefiend.views.RatingBubbleView
                     android:id="@+id/rating_bubble"
                     style="@style/RatingBubble"/>
             </LinearLayout>

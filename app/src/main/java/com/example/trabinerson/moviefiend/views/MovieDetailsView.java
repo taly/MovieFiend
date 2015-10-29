@@ -9,7 +9,7 @@
  * PARTICULAR PURPOSE.
  */
 
-package com.example.trabinerson.moviefiend;
+package com.example.trabinerson.moviefiend.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -21,6 +21,9 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.example.trabinerson.moviefiend.Movie;
+import com.example.trabinerson.moviefiend.R;
+import com.example.trabinerson.moviefiend.RequestQueueSingleton;
 
 /**
  * A custom view that shows movie details.

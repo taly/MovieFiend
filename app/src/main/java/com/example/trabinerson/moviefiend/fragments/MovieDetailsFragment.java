@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.trabinerson.moviefiend.Movie;
-import com.example.trabinerson.moviefiend.MovieDetailsView;
+import com.example.trabinerson.moviefiend.views.MovieDetailsView;
 import com.example.trabinerson.moviefiend.R;
 import com.example.trabinerson.moviefiend.loaders.SimilarMoviesLoader;
 
@@ -77,19 +77,6 @@ public class MovieDetailsFragment extends Fragment
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.movie_details_view, container, false);
-        mMovieDetailsView = (MovieDetailsView) rootView.findViewById(R.id.movie_details_view);
-
-//        // Get movie
-//        Bundle args = getArguments();
-//        Movie movie = args.getParcelable(ARG_KEY_MOVIE);
-
-        // Set movie
-//        mMovieDetailsHolder = new MovieDetailsHolder(rootView);
-//        mMovieDetailsHolder.disableSimilarMovies();
-//        mMovieDetailsHolder.setMovie(movie, false);
-
-//        ViewGroup rootView = (ViewGroup) inflater.inflate(
-//                R.layout.movie_details, container, false);
 
         // Get general args
         Bundle args = getArguments();
@@ -100,9 +87,8 @@ public class MovieDetailsFragment extends Fragment
         mShowSimilar = args.getBoolean(ARG_KEY_SHOW_SIMILAR, true);
 
         // Initializations
+        mMovieDetailsView = (MovieDetailsView) rootView.findViewById(R.id.movie_details_view);
         initSimilarMovies(rootView);
-//        mMovieDetailsHolder = new MovieDetailsHolder(rootView);
-
 
         // Get movie
         Movie movie = args.getParcelable(ARG_KEY_MOVIE);

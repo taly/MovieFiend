@@ -1,4 +1,4 @@
-package com.example.trabinerson.moviefiend;
+package com.example.trabinerson.moviefiend.views;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
+import com.example.trabinerson.moviefiend.R;
 
 /**
  * A container for a movie's rating.
