@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.trabinerson.moviefiend.Movie;
-import com.example.trabinerson.moviefiend.MovieDetailsHolder;
+import com.example.trabinerson.moviefiend.MovieDetailsView;
 import com.example.trabinerson.moviefiend.R;
 import com.example.trabinerson.moviefiend.loaders.SimilarMoviesLoader;
 
@@ -37,7 +37,7 @@ public class MovieDetailsFragment extends Fragment
 
     private int mMovieId;
     private Movie[] mSimilarMovies;
-    private MovieDetailsHolder mMovieDetailsHolder;
+    private MovieDetailsView mMovieDetailsView;
     private Callbacks mCallback;
     private boolean mAnimateRating;
     private boolean mShowSimilar;
@@ -74,8 +74,22 @@ public class MovieDetailsFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.movie_details, container, false);
+                R.layout.movie_details_view, container, false);
+        mMovieDetailsView = (MovieDetailsView) rootView.findViewById(R.id.movie_details_view);
+
+//        // Get movie
+//        Bundle args = getArguments();
+//        Movie movie = args.getParcelable(ARG_KEY_MOVIE);
+
+        // Set movie
+//        mMovieDetailsHolder = new MovieDetailsHolder(rootView);
+//        mMovieDetailsHolder.disableSimilarMovies();
+//        mMovieDetailsHolder.setMovie(movie, false);
+
+//        ViewGroup rootView = (ViewGroup) inflater.inflate(
+//                R.layout.movie_details, container, false);
 
         // Get general args
         Bundle args = getArguments();
@@ -87,7 +101,8 @@ public class MovieDetailsFragment extends Fragment
 
         // Initializations
         initSimilarMovies(rootView);
-        mMovieDetailsHolder = new MovieDetailsHolder(rootView);
+//        mMovieDetailsHolder = new MovieDetailsHolder(rootView);
+
 
         // Get movie
         Movie movie = args.getParcelable(ARG_KEY_MOVIE);
@@ -114,7 +129,7 @@ public class MovieDetailsFragment extends Fragment
         Log.i(LOG_TAG, "Got " + data.length + " similar movies");
         mSimilarMovies = data;
         if (mShowSimilar) {
-            mMovieDetailsHolder.finishLoading();
+            mMovieDetailsView.finishLoading();
         }
     }
 
@@ -123,9 +138,9 @@ public class MovieDetailsFragment extends Fragment
 
     private void setMovie(Movie movie) {
         if (!mShowSimilar) {
-            mMovieDetailsHolder.disableSimilarMovies();
+            mMovieDetailsView.disableSimilarMovies();
         }
-        mMovieDetailsHolder.setMovie(movie, mAnimateRating);
+        mMovieDetailsView.setMovie(movie, mAnimateRating);
     }
 
     private void initSimilarMovies(View rootView) {
