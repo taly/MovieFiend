@@ -26,11 +26,27 @@ public class MovieDetailsView extends ScrollView {
     private ProgressBar mProgressBar;
     private RatingBubbleView mRatingBubble;
 
-    public MovieDetailsView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.movie_details_view_children, this, true);
-        setupChildren();
+    public MovieDetailsView(Context context) { super(context); }
+
+    public MovieDetailsView(Context context, AttributeSet attrs) { super(context, attrs); }
+
+    public MovieDetailsView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
     }
+
+    {
+        // Inflate
+        LayoutInflater.from(getContext()).inflate(R.layout.movie_details_view_children, this, true);
+
+        // Setup children
+        mPosterView = (NetworkImageView) findViewById(R.id.imageview_details_poster);
+        mNameView = (TextView) findViewById(R.id.textview_movie_name);
+        mRatingBubble = (RatingBubbleView) findViewById(R.id.rating_bubble);
+        mDescriptionView = (TextView) findViewById(R.id.textview_movie_description);
+        mSimilarMoviesText = (TextView) findViewById(R.id.textview_similar_movies);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_similar_movies);
+    }
+
 
     public void setMovie(Movie movie, boolean animate) {
         ImageLoader imageLoader = RequestQueueSingleton.getInstance().getImageLoader();
@@ -51,15 +67,6 @@ public class MovieDetailsView extends ScrollView {
     public void disableSimilarMovies() {
         mSimilarMoviesText.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.GONE);
-    }
-
-    private void setupChildren() {
-        mPosterView = (NetworkImageView) findViewById(R.id.imageview_details_poster);
-        mNameView = (TextView) findViewById(R.id.textview_movie_name);
-        mRatingBubble = (RatingBubbleView) findViewById(R.id.rating_bubble);
-        mDescriptionView = (TextView) findViewById(R.id.textview_movie_description);
-        mSimilarMoviesText = (TextView) findViewById(R.id.textview_similar_movies);
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_similar_movies);
     }
 
 }
