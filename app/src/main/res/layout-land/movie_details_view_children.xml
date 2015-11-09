@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,7 +36,7 @@
                     android:text="@string/rating_standalone"
                     android:layout_marginRight="5dp"
                     android:id="@+id/textview_movie_rating" />
-                <com.example.trabinerson.moviefiend.RatingBubbleView
+                <com.example.trabinerson.moviefiend.views.RatingBubbleView
                     android:id="@+id/rating_bubble"
                     style="@style/RatingBubble"/>
             </LinearLayout>
@@ -58,7 +57,7 @@
                     android:id="@+id/textview_similar_movies"
                     android:layout_marginTop="10dp"
                     android:clickable="true"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"/>
             </FrameLayout>
 
             <TextView
@@ -79,5 +78,4 @@
             android:scaleType="fitCenter"/>
 
     </LinearLayout>
-
-</ScrollView>
+</merge>
